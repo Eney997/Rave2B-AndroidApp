@@ -1,7 +1,6 @@
 package com.example.rave2b.popups
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -35,12 +34,12 @@ import androidx.compose.ui.window.Dialog
 import androidx.core.content.ContextCompat
 import com.example.rave2b.R
 import com.example.rave2b.data.RetrofitClient.apiService
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import androidx.core.content.edit
-import com.example.rave2b.MainActivity
 
 @Composable
-fun DeleteUser(
+fun ChangePassword
+(
     onDismiss: () -> Unit
 )
 {
@@ -73,9 +72,9 @@ fun DeleteUser(
 
                 Text(
                     text  = when {
-                        errorMessage.value.isEmpty() -> "Please enter your username!"
+                        errorMessage.value.isEmpty() -> "Please enter new password!"
                         else -> errorMessage.value
-                     },
+                    },
                     fontSize = 16.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
@@ -124,28 +123,23 @@ fun DeleteUser(
                             return@Button
                         }
 
-                        if (username != txt.value)
-                        {
-                            errorMessage.value = "Enter your username."
-                            return@Button
-                        }
-                        //coroutine scope for deleting in database
+                        //coroutine scope for update password in database
+                        val newPassword = txt.value
+
                         coroutineScope.launch {
                             try {
-                                val response = apiService.deleteUser(username)
+                                val response = apiService.updatePas(username, newPassword)
                                 if (response.isSuccessful) {
-                                    // Optional: Clear SharedPreferences and close app or redirect
-                                    sharedPref.edit { clear() }
-                                    //navigate to login screen
-                                    val i = Intent(context, MainActivity::class.java)
-                                    i.flags =
-                                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                    context.startActivity(i)
+                                    errorMessage.value = "Password updated successfully."
+                                    delay(1000)
+                                    onDismiss()
                                 } else {
-                                    Log.d("myLog", "Error: ${response.code()}")
+                                    Log.d("myLog", "Failed to update password: ${response.code()}")
+                                    errorMessage.value = "Update failed: ${response.code()}"
                                 }
                             } catch (e: Exception) {
                                 Log.d("myLog", "Error: ${e.message}")
+                                errorMessage.value = "Exception: ${e.message}"
                             }
                         }
                     },
@@ -159,4 +153,5 @@ fun DeleteUser(
             }
         }
     }
+    
 }

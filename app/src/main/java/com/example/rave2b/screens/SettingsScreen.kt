@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.edit
 import com.example.rave2b.MainActivity
 import com.example.rave2b.R
+import com.example.rave2b.popups.ChangePassword
 import com.example.rave2b.popups.DeleteUser
 
 @Composable
@@ -45,12 +46,19 @@ fun SettingsScreen()
     val sharedPref = context.getSharedPreferences("user_pref", Context.MODE_PRIVATE)
     val username = sharedPref.getString("username", "")
     var isTextVisible by remember { mutableStateOf(false) }
-    var showDialog by remember { mutableStateOf(false) }
+    var showDialogDelete by remember { mutableStateOf(false) }
+    var showDialogPutPass by remember { mutableStateOf(false) }
 
-    //show dialog box
-    if (showDialog && username != null)
+    //show dialog box for delete user
+    if (showDialogDelete && username != null)
     {
-        DeleteUser (onDismiss = {showDialog = false})
+        DeleteUser (onDismiss = {showDialogDelete = false})
+    }
+
+    //show dialog box for update password
+    if (showDialogPutPass && username != null)
+    {
+        ChangePassword (onDismiss = {showDialogPutPass = false})
     }
 
     Box(modifier = Modifier
@@ -110,7 +118,7 @@ fun SettingsScreen()
                     Icon(painter = painterResource(id = R.drawable.ic_arrow_right), contentDescription = "Change password", tint = Color.White, modifier = Modifier
                         .padding(end = 20.dp)
                         .clickable {
-                            //change password
+                            showDialogPutPass  =  true
                         })
                 }
 
@@ -128,7 +136,7 @@ fun SettingsScreen()
                     Icon(painter = painterResource(id = R.drawable.ic_arrow_right), contentDescription = "Delete account", tint = Color.White, modifier = Modifier
                         .padding(end = 20.dp)
                         .clickable {
-                            showDialog = true
+                            showDialogDelete = true
                         })
                 }
 

@@ -4,6 +4,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ApiService {
@@ -16,5 +17,6 @@ interface ApiService {
     //for delete account
     @DELETE("api/registration/{username}")
     suspend fun deleteUser(@Path("username") username: String): Response<Void>
-
+    @PUT("api/registration/{username}")
+    suspend fun updatePas(@Path("username") username: String, @Body newPassword: String): Response<Void>
 }
