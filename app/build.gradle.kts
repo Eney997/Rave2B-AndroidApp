@@ -43,6 +43,12 @@ dependencies {
 
     //navigation component
     implementation(libs.androidx.navigation.compose)
+    //retrofit component
+    implementation(libs.retrofit)// Retrofit core library
+    implementation(libs.converter.gson)// For JSON serialization/deserialization with Gson
+    implementation(libs.logging.interceptor)// For logging network requests/responses
+    //coroutines component
+    implementation (libs.kotlinx.coroutines.android)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

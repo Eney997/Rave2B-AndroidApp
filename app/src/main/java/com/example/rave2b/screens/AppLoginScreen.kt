@@ -37,8 +37,12 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.navigation.NavController
+import com.example.rave2b.R
+import com.example.rave2b.data.LoginDto
+import com.example.rave2b.data.RetrofitClient
 import kotlinx.coroutines.launch
 
 @Composable
@@ -48,7 +52,7 @@ fun AppLoginScreen(
 {
     val context = LocalContext.current
     val mySnackBarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
+    val corScope = rememberCoroutineScope()
     val userName = remember { mutableStateOf("") }
     val userPassword = remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(false) }
@@ -79,8 +83,7 @@ fun AppLoginScreen(
                     color = Color.White,
                     fontSize = 19.sp
                 ),
-
-                )
+            )
 
             Spacer(modifier = Modifier.height(15.dp))
 
@@ -114,38 +117,40 @@ fun AppLoginScreen(
             Spacer(modifier = Modifier.height(25.dp))
 
             Button(
-                onClick =
-                    {
-                        if(userName.value.isEmpty() || userPassword.value.isEmpty())
-                        {
-                            scope.launch {
-                                mySnackBarHostState.showSnackbar("Empty Fields")
-                            }
-                            return@Button
+                onClick = {
+                    if (userName.value.isEmpty() || userPassword.value.isEmpty()) {
+                        corScope.launch {
+                            mySnackBarHostState.showSnackbar("Empty Fields")
                         }
+                        return@Button
+                    }
 
-                        if(false)//here if username and password exists in db
-                        {
-                            //if we logged in app will save that shit making that shit true bitch mr white
-                            val sharedPref = context.getSharedPreferences("user_pref", Context.MODE_PRIVATE)
-                            sharedPref.edit { putBoolean("is_logged_in", true) }
-                            sharedPref.edit { putString("username", userName.value) }
+                    corScope.launch {
+                        try {
+                            val response = RetrofitClient.apiService.loginUser(
+                                LoginDto(userName.value, userPassword.value)
+                            )
 
-                            myNavController.navigate("AppUserScreen"){
-                                popUpTo("AppLogInScreen"){inclusive = true}
-                                launchSingleTop = true
-                            }
-                        }
-                        else
-                        {
-                            scope.launch {
+                            if (response.isSuccessful) {
+                                val sharedPref = context.getSharedPreferences("user_pref", Context.MODE_PRIVATE)
+                                sharedPref.edit {
+                                    putBoolean("is_logged_in", true)
+                                    putString("username", userName.value)
+                                }
+
+                                myNavController.navigate("AppUserScreen") {
+                                    popUpTo("AppLogInScreen") { inclusive = true }
+                                    launchSingleTop = true
+                                }
+                            } else {
                                 mySnackBarHostState.showSnackbar("Invalid Credentials")
                             }
-                            return@Button
+                        } catch (e: Exception) {
+                            mySnackBarHostState.showSnackbar("Login failed: ${e.message}")
                         }
-
-                    },
-                modifier = Modifier
+                    }
+                },
+                    modifier = Modifier
                     .width(150.dp)
                     .height(60.dp)
                     .border(
@@ -198,13 +203,10 @@ fun AppLoginScreen(
             snackbar = { data ->
                 Snackbar(
                     snackbarData = data,
-                    containerColor = Color.White,
+                    containerColor = Color(ContextCompat.getColor(LocalContext.current,R.color.snackBarColor)),
                     contentColor = Color.White
                 )
             }
         )
     }
-
-
-    
 }
