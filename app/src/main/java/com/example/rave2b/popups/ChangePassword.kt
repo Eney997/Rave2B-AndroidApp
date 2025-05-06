@@ -117,6 +117,12 @@ fun ChangePassword
                             return@Button
                         }
 
+                        if(txt.value.length < 7)
+                        {
+                            errorMessage.value = "Password minimum length is 7."
+                            return@Button
+                        }
+
                         //if username was not found
                         if (username.isEmpty()) {
                             Log.d("myLog", "Username not found in shared preferences.")

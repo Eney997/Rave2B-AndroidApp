@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Rave2B</string>
+    <string-array name="rave_obligation_titles">
+        <item>Age Verification</item>
+        <item>Respect the Rave Code</item>
+        <item>No Ticket Sharing or Resale</item>
+        <item>Follow Venue And Safety Rules</item>
+        <item>Dress Code Awareness</item>
+    </string-array>
+
+    <string-array name="rave_obligation_descriptions">
+        <item>All attendees must be 18+ and present a valid government-issued ID at the entrance. No refunds will be issued for underage attendees denied entry.</item>
+        <item>rav2B promotes unity, mutual respect, and a safe atmosphere for all. Disruptive or aggressive behavior toward staff or guests will lead to immediate removal without refund.</item>
+        <item>Tickets are non-transferable and must match the ID used during purchase. Reselling or sharing tickets is strictly prohibited.</item>
+        <item>All guests must comply with club safety procedures, including bag checks and security screening. Illegal substances and unauthorized recording are banned.</item>
+        <item>rav2B enforces a strict black-only dress code. Guests must wear all-black outfits—colorful or brightly patterned clothing is not permitted. Entry will be denied to those who do not respect the club’s dark, unified aesthetic.</item>
+    </string-array>
 </resources>

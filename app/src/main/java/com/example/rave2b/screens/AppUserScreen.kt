@@ -43,6 +43,7 @@ fun AppUserScreen() {
     val navController = rememberNavController()
     val bottomNavItems = listOf(
         BottomNavItem("Home","HomeScreen", R.drawable.ic_home),
+        BottomNavItem("Nights","EventsScreen", R.drawable.ic_fire_nights),
         BottomNavItem("Tickets","TicketScreen", R.drawable.ic_hub),
         BottomNavItem("Settings","SettingsScreen", R.drawable.ic_settings)
     )
@@ -76,6 +77,7 @@ fun Navigation(navHostController: NavHostController)
     NavHost(startDestination = "HomeScreen", navController = navHostController)
     {
         composable("HomeScreen"){HomeScreen()}
+        composable("EventsScreen"){EventsScreen()}
         composable("TicketScreen"){ TicketScreen() }
         composable("SettingsScreen"){ SettingsScreen() }
     }
