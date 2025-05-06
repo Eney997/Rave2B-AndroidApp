@@ -49,6 +49,10 @@ dependencies {
     implementation(libs.logging.interceptor)// For logging network requests/responses
     //coroutines component
     implementation (libs.kotlinx.coroutines.android)
+    //viewmodel component
+    implementation (libs.androidx.lifecycle.viewmodel.compose)
+    implementation (libs.androidx.lifecycle.runtime.ktx.v262)
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

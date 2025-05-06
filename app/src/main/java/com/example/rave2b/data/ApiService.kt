@@ -3,6 +3,7 @@ package com.example.rave2b.data
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
+import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -17,6 +18,10 @@ interface ApiService {
     //for delete account
     @DELETE("api/registration/{username}")
     suspend fun deleteUser(@Path("username") username: String): Response<Void>
+    //for update password
     @PUT("api/registration/{username}")
     suspend fun updatePas(@Path("username") username: String, @Body newPassword: String): Response<Void>
+    //for ticket
+    @GET("api/ticket/allTicket")
+    suspend fun getAllTickets(): Response<List<TicketDto>>
 }
