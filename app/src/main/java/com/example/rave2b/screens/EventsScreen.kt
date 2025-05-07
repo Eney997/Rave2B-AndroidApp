@@ -1,27 +1,36 @@
 package com.example.rave2b.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.rave2b.R
 import com.example.rave2b.data.TicketDto
 import com.example.rave2b.data.TicketViewModel
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun EventsScreen() {
     val ticketViewModel: TicketViewModel = viewModel()
@@ -46,45 +55,69 @@ fun EventsScreen() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TicketItem(ticket: TicketDto) {
+
+    val originalData = ticket.eventDate
+    val parsedDate = LocalDateTime.parse(originalData, DateTimeFormatter.ISO_DATE_TIME)
+    val formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("dd-MM-yy"))
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(300.dp)
+            .height(250.dp)
             .padding(bottom = 15.dp)
-    ) {
+            .border(1.dp, Color.DarkGray, shape = RoundedCornerShape(10.dp))
+            .clip(RoundedCornerShape(10.dp))
+            .background(color = Color(ContextCompat.getColor(LocalContext.current, R.color.snackBarColor)))
+    )
+    {
+
+        Text(
+            text = "RAVE2B",
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.Normal,
+            color = Color.White,
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(top = 16.dp, end = 20.dp)
+        )
+        // Text and ticket info column
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .clip(RoundedCornerShape(10.dp)) // Clip children
-                .background(
-                    color = Color(ContextCompat.getColor(LocalContext.current, R.color.snackBarColor)),
-                    shape = RoundedCornerShape(10.dp)
+                .padding(start = 20.dp, top = 30.dp, bottom = 30.dp, end = 20.dp)
+        )
+        {
+            Text("SET-I: ${ticket.djNameOne}", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal, color = Color.White)
+            Text("SET-II: ${ticket.djNameTwo}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
+            Text("SET-III: ${ticket.djNameThree}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
+            Text("SET-IV: ${ticket.djNameFour}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
+            Text("Date: $formattedDate", color = Color.Cyan, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(text = "BUY", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal, fontSize = 19.sp)
+                Spacer(modifier = Modifier.width(3.dp))
+                Icon(
+                    painter = painterResource(R.drawable.ic_arrow_right),
+                    contentDescription = "buy click",
+                    tint = Color.White,
+                    modifier = Modifier.size(40.dp)
                 )
-                .padding(start = 190.dp)
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.applogo),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
+            }
         }
-        Column(
+
+        // Bottom-right logo image
+        Image(
+            painter = painterResource(id = R.drawable.applogo),
+            contentDescription = null,
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            Text("DJ One: ${ticket.djNameOne}", color = Color.White)
-            Text("DJ Two: ${ticket.djNameTwo}", color = Color.White)
-            Text("DJ Three: ${ticket.djNameThree}", color = Color.White)
-            Text("DJ Four: ${ticket.djNameFour}", color = Color.White)
-            Text("Date: ${ticket.eventDate}", color = Color.Cyan)
-        }
+                .size(80.dp)
+                .align(Alignment.BottomEnd)
+                .padding(bottom = 30.dp)
+        )
     }
-
 }
-
-
-

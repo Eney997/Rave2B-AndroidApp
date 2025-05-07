@@ -95,7 +95,7 @@ fun ChangePassword
                         focusedIndicatorColor = Color.White,
                     ),
                     placeholder = {
-                        Text(text = "Type here", color = Color.White, fontSize = 19.sp,fontWeight = FontWeight.Bold)
+                        Text(text = "TYPE", color = Color.White, fontSize = 19.sp,fontWeight = FontWeight.Bold)
                     },
                     maxLines = 1,
                     textStyle = TextStyle(
