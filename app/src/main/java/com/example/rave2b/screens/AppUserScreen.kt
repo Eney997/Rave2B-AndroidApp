@@ -1,6 +1,8 @@
 package com.example.rave2b.screens
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -36,6 +38,7 @@ import kotlin.collections.forEach
 data class BottomNavItem(val name:String,val route:String,val icon:Int)
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AppUserScreen() {
@@ -71,14 +74,27 @@ fun AppUserScreen() {
 }
 
 //navigation in bottom bar
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Navigation(navHostController: NavHostController)
 {
     NavHost(startDestination = "HomeScreen", navController = navHostController)
     {
         composable("HomeScreen"){HomeScreen()}
-        composable("EventsScreen"){EventsScreen()}
+        composable("EventsScreen"){EventsScreen(navHostController)}
         composable("TicketScreen"){ TicketScreen() }
+        //to take special arguments from events screen
+        composable ( route = "BuyTicketScreen/{djNameOne}/{djNameTwo}/{djNameThree}/{djNameFour}/{eventDate}")
+        { backStackEntry ->
+
+            val djNameOne = backStackEntry.arguments?.getString("djNameOne") ?: ""
+            val djNameTwo = backStackEntry.arguments?.getString("djNameTwo") ?: ""
+            val djNameThree = backStackEntry.arguments?.getString("djNameThree") ?: ""
+            val djNameFour = backStackEntry.arguments?.getString("djNameFour") ?: ""
+            val eventDate = backStackEntry.arguments?.getString("eventDate") ?: ""
+
+            BuyTicketScreen(djNameOne,djNameTwo,djNameThree,djNameFour,eventDate)
+        }
         composable("SettingsScreen"){ SettingsScreen() }
     }
 

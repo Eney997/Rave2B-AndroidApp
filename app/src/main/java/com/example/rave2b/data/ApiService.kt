@@ -24,4 +24,7 @@ interface ApiService {
     //for ticket
     @GET("api/ticket/allTicket")
     suspend fun getAllTickets(): Response<List<TicketDto>>
+    //for transaction
+    @POST("api/Transaction/addTransaction")
+    suspend fun addTransaction(@Body transactionDto: TransactionDto): Response<Void>
 }

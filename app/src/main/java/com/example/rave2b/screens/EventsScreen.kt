@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.rave2b.R
 import com.example.rave2b.data.TicketDto
 import com.example.rave2b.data.TicketViewModel
@@ -32,7 +34,7 @@ import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun EventsScreen() {
+fun EventsScreen(myNavController: NavController) {
     val ticketViewModel: TicketViewModel = viewModel()
     val tickets by ticketViewModel.tickets.collectAsState()
 
@@ -49,7 +51,7 @@ fun EventsScreen() {
     ) {
         LazyColumn(modifier = Modifier) {
             items(tickets) { ticket ->
-                TicketItem(ticket)
+                TicketItem(ticket,myNavController)
             }
         }
     }
@@ -57,11 +59,11 @@ fun EventsScreen() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun TicketItem(ticket: TicketDto) {
+fun TicketItem(ticket: TicketDto,myNavController: NavController) {
 
-    val originalData = ticket.eventDate
-    val parsedDate = LocalDateTime.parse(originalData, DateTimeFormatter.ISO_DATE_TIME)
-    val formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("dd-MM-yy"))
+    //val originalData = ticket.eventDate
+    //val parsedDate = LocalDateTime.parse(originalData, DateTimeFormatter.ISO_DATE_TIME)
+    //val formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("dd-MM-yy"))
 
     Box(
         modifier = Modifier
@@ -73,7 +75,6 @@ fun TicketItem(ticket: TicketDto) {
             .background(color = Color(ContextCompat.getColor(LocalContext.current, R.color.snackBarColor)))
     )
     {
-
         Text(
             text = "RAVE2B",
             style = MaterialTheme.typography.bodyLarge,
@@ -94,7 +95,8 @@ fun TicketItem(ticket: TicketDto) {
             Text("SET-II: ${ticket.djNameTwo}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
             Text("SET-III: ${ticket.djNameThree}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
             Text("SET-IV: ${ticket.djNameFour}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
-            Text("Date: $formattedDate", color = Color.Cyan, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
+            Text("Date: ${ticket.eventDate}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
+            //Text("Date: $formattedDate", color = Color.Cyan, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
 
             Spacer(modifier = Modifier.height(30.dp))
 
@@ -106,6 +108,9 @@ fun TicketItem(ticket: TicketDto) {
                     contentDescription = "buy click",
                     tint = Color.White,
                     modifier = Modifier.size(40.dp)
+                        .clickable{
+                            myNavController.navigate("BuyTicketScreen/${ticket.djNameOne}/${ticket.djNameTwo}/${ticket.djNameThree}/${ticket.djNameFour}/${ticket.eventDate}")
+                    }
                 )
             }
         }
