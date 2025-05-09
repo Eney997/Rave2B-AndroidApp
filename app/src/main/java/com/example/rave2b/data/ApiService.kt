@@ -27,4 +27,7 @@ interface ApiService {
     //for transaction
     @POST("api/Transaction/addTransaction")
     suspend fun addTransaction(@Body transactionDto: TransactionDto): Response<Void>
+    //search transactions bu username
+    @GET("api/Transaction/{username}")
+    suspend fun getTransactionsByUsername(@Path("username") username: String): Response<List<TransactionDto>>
 }

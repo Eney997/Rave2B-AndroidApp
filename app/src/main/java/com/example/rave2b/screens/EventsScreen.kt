@@ -29,7 +29,7 @@ import androidx.navigation.NavController
 import com.example.rave2b.R
 import com.example.rave2b.data.TicketDto
 import com.example.rave2b.data.TicketViewModel
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -49,7 +49,7 @@ fun EventsScreen(myNavController: NavController) {
             .padding(top = 50.dp, bottom = 120.dp, start = 10.dp, end = 10.dp),
         contentAlignment = Alignment.TopStart
     ) {
-        LazyColumn(modifier = Modifier) {
+        LazyColumn(modifier = Modifier, reverseLayout = true) {
             items(tickets) { ticket ->
                 TicketItem(ticket,myNavController)
             }
@@ -61,9 +61,16 @@ fun EventsScreen(myNavController: NavController) {
 @Composable
 fun TicketItem(ticket: TicketDto,myNavController: NavController) {
 
-    //val originalData = ticket.eventDate
-    //val parsedDate = LocalDateTime.parse(originalData, DateTimeFormatter.ISO_DATE_TIME)
-    //val formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("dd-MM-yy"))
+    //catch event happened already or not
+    val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+    val eventDate = try {
+        LocalDate.parse(ticket.eventDate, formatter)
+    } catch (e: Exception) {
+        null
+    }
+    //take date for today
+    val today = LocalDate.now()
+
 
     Box(
         modifier = Modifier
@@ -96,25 +103,39 @@ fun TicketItem(ticket: TicketDto,myNavController: NavController) {
             Text("SET-III: ${ticket.djNameThree}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
             Text("SET-IV: ${ticket.djNameFour}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
             Text("Date: ${ticket.eventDate}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
-            //Text("Date: $formattedDate", color = Color.Cyan, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(text = "BUY", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal, fontSize = 19.sp)
-                Spacer(modifier = Modifier.width(3.dp))
-                Icon(
-                    painter = painterResource(R.drawable.ic_arrow_right),
-                    contentDescription = "buy click",
-                    tint = Color.White,
-                    modifier = Modifier.size(40.dp)
-                        .clickable{
-                            myNavController.navigate("BuyTicketScreen/${ticket.djNameOne}/${ticket.djNameTwo}/${ticket.djNameThree}/${ticket.djNameFour}/${ticket.eventDate}")
-                    }
+            if (eventDate != null && !eventDate.isBefore(today)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "BUY",
+                        color = Color.White,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 19.sp
+                    )
+                    Spacer(modifier = Modifier.width(3.dp))
+                    Icon(
+                        painter = painterResource(R.drawable.ic_arrow_right),
+                        contentDescription = "buy click",
+                        tint = Color.White,
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clickable {
+                                myNavController.navigate("BuyTicketScreen/${ticket.djNameOne}/${ticket.djNameTwo}/${ticket.djNameThree}/${ticket.djNameFour}/${ticket.eventDate}")
+                            }
+                    )
+                }
+            } else {
+                Text(
+                    text = "Event already happened",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
                 )
             }
         }
-
         // Bottom-right logo image
         Image(
             painter = painterResource(id = R.drawable.applogo),

@@ -43,6 +43,7 @@ import androidx.navigation.NavController
 import com.example.rave2b.R
 import com.example.rave2b.data.LoginDto
 import com.example.rave2b.data.RetrofitClient
+import com.example.rave2b.networkpermission.isNetworkAvailable
 import kotlinx.coroutines.launch
 
 @Composable
@@ -118,6 +119,14 @@ fun AppLoginScreen(
 
             Button(
                 onClick = {
+
+                    if(!isNetworkAvailable(context)){
+                        corScope.launch {
+                            mySnackBarHostState.showSnackbar("No Internet Connection")
+                        }
+                        return@Button
+                    }
+
                     if (userName.value.isEmpty() || userPassword.value.isEmpty()) {
                         corScope.launch {
                             mySnackBarHostState.showSnackbar("Empty Fields")

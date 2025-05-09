@@ -44,12 +44,14 @@ import androidx.core.content.ContextCompat
 import com.example.rave2b.R
 import com.example.rave2b.data.RegistrationDto
 import com.example.rave2b.data.RetrofitClient
+import com.example.rave2b.networkpermission.isNetworkAvailable
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppSignUpScreen()
 {
+    val context = LocalContext.current
     val locations = listOf("Georgia", "Germany", "France", "Poland", "Spain")
     var expanded by remember { mutableStateOf(false) }
     val scroll = rememberScrollState()
@@ -325,6 +327,14 @@ fun AppSignUpScreen()
                     lName = lName.value,
                     idNumber = idNumber.value
                 )
+
+                if(!isNetworkAvailable(context))
+                {
+                    corScope.launch {
+                        mySnackBarHostState.showSnackbar("No Internet Connection")
+                    }
+                    return@Button
+                }
 
                 //empty input handle
                 if(userName.value.isEmpty() || password.value.isEmpty() || gmail.value.isEmpty() || country.value.isEmpty() || fName.value.isEmpty() || lName.value.isEmpty() || idNumber.value.isEmpty())
