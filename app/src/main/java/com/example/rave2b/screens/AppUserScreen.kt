@@ -37,7 +37,6 @@ import kotlin.collections.forEach
 //data class for bottom nav item
 data class BottomNavItem(val name:String,val route:String,val icon:Int)
 
-
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -72,7 +71,6 @@ fun AppUserScreen() {
         }
     }
 }
-
 //navigation in bottom bar
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -99,7 +97,6 @@ fun Navigation(navHostController: NavHostController)
     }
 
 }
-
 //create bottom nav design
 @Composable
 fun BottomNavigationBar

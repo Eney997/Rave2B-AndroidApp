@@ -206,7 +206,7 @@ fun BuyTicketScreen(
 
             Button(
                 onClick = {
-
+                    //create transaction
                     val transaction = TransactionDto(
                         userNm = username.toString(),
                         djOne = djNameOne,

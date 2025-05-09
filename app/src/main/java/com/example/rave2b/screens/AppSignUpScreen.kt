@@ -328,6 +328,7 @@ fun AppSignUpScreen()
                     idNumber = idNumber.value
                 )
 
+                //network offline error
                 if(!isNetworkAvailable(context))
                 {
                     corScope.launch {

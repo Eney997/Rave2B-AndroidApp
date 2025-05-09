@@ -69,7 +69,6 @@ fun TicketScreen() {
             }
 
             isLoading -> {
-                // ✅ Centered loading message
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
@@ -84,7 +83,6 @@ fun TicketScreen() {
             }
 
             hasInternetError -> {
-                // ✅ Centered error message and button
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
@@ -115,9 +113,7 @@ fun TicketScreen() {
                 }
             }
 
-
             else -> {
-                // ✅ Actual content with top padding
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
@@ -130,10 +126,7 @@ fun TicketScreen() {
         }
     }
 }
-
-
-
-
+//card for tickets
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PurchasedTickets(transaction: TransactionDto) {

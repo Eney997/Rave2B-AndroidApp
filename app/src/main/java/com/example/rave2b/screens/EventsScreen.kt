@@ -91,12 +91,11 @@ fun EventsScreen(myNavController: NavController) {
         }
     }
 }
-
-
+//card for tickets
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun TicketItem(ticket: TicketDto,myNavController: NavController) {
-
+fun TicketItem(ticket: TicketDto,myNavController: NavController)
+{
     //catch event happened already or not
     val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
     val eventDate = try {
@@ -106,7 +105,6 @@ fun TicketItem(ticket: TicketDto,myNavController: NavController) {
     }
     //take date for today
     val today = LocalDate.now()
-
 
     Box(
         modifier = Modifier
