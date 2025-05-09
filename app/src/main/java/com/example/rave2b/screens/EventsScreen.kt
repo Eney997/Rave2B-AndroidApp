@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -37,6 +39,8 @@ import java.time.format.DateTimeFormatter
 fun EventsScreen(myNavController: NavController) {
     val ticketViewModel: TicketViewModel = viewModel()
     val tickets by ticketViewModel.tickets.collectAsState()
+    val isLoading by ticketViewModel.isLoading.collectAsState()
+    val hasInternetError by ticketViewModel.hasInternetError.collectAsState()
 
     LaunchedEffect(Unit) {
         ticketViewModel.fetchTickets()
@@ -47,15 +51,47 @@ fun EventsScreen(myNavController: NavController) {
             .fillMaxSize()
             .background(Color.Black)
             .padding(top = 50.dp, bottom = 120.dp, start = 10.dp, end = 10.dp),
-        contentAlignment = Alignment.TopStart
+        contentAlignment = Alignment.Center
     ) {
-        LazyColumn(modifier = Modifier, reverseLayout = true) {
-            items(tickets) { ticket ->
-                TicketItem(ticket,myNavController)
+        when {
+            isLoading -> {
+                Text(text = "Loading...",  color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
+            }
+
+            hasInternetError -> {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = "No internet connection",
+                        color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+                    Button(onClick = { ticketViewModel.fetchTickets() },
+                        modifier = Modifier
+                            .width(140.dp)
+                            .height(55.dp)
+                            .border(
+                                2.dp,
+                                Color.Gray,
+                                shape = androidx.compose.foundation.shape.RoundedCornerShape(10.dp)
+                            ),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+                    ) {
+                        Text("Retry",style = MaterialTheme.typography.titleLarge , color = Color.Gray)
+                    }
+                }
+            }
+
+            else -> {
+                LazyColumn(modifier = Modifier.fillMaxSize(), reverseLayout = true) {
+                    items(tickets) { ticket ->
+                        TicketItem(ticket, myNavController)
+                    }
+                }
             }
         }
     }
 }
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
