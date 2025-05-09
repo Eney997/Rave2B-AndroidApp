@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,6 +39,9 @@ fun TicketScreen() {
     val context = LocalContext.current
     val sharedPref = context.getSharedPreferences("user_pref", Context.MODE_PRIVATE)
     val username = sharedPref.getString("username", "") ?: ""
+    val isLoading = transactionViewModel.isLoading.collectAsState().value
+    val hasInternetError = transactionViewModel.hasInternetError.collectAsState().value
+    val emptyMessage = transactionViewModel.emptyMessage.collectAsState().value
 
     LaunchedEffect(Unit) {
         transactionViewModel.fetchTransactions(username)
@@ -47,23 +52,87 @@ fun TicketScreen() {
             .fillMaxSize()
             .background(Color.Black)
             .padding(top = 50.dp, bottom = 120.dp, start = 10.dp, end = 10.dp),
-        contentAlignment = Alignment.TopStart
     ) {
-        if (transactions.isEmpty()) {
-            Text(
-                text = "You haven't bought your tickets yet.",
-                style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal, color = Color.White,
-                modifier = Modifier.align(Alignment.Center)
-            )
-        } else {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(transactions) { tran ->
-                    PurchasedTickets(tran)
+        when {
+
+            emptyMessage != null -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = emptyMessage,
+                        color = Color.White,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            }
+
+            isLoading -> {
+                // ✅ Centered loading message
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Loading...",
+                        color = Color.White,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Normal
+                    )
+                }
+            }
+
+            hasInternetError -> {
+                // ✅ Centered error message and button
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = "No internet connection",
+                            color = Color.White,
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.Normal,
+                            modifier = Modifier.padding(bottom = 16.dp)
+                        )
+                        Button(
+                            onClick = { transactionViewModel.fetchTransactions(username) },
+                            modifier = Modifier
+                                .width(140.dp)
+                                .height(55.dp)
+                                .border(
+                                    2.dp,
+                                    Color.Gray,
+                                    shape = RoundedCornerShape(10.dp)
+                                ),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+                        ) {
+                            Text("Retry", style = MaterialTheme.typography.titleLarge, color = Color.Gray)
+                        }
+                    }
+                }
+            }
+
+
+            else -> {
+                // ✅ Actual content with top padding
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    items(transactions) { tran ->
+                        PurchasedTickets(tran)
+                    }
                 }
             }
         }
     }
 }
+
+
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class TicketViewModel : ViewModel() {
-
+class TicketViewModel : ViewModel()
+{
     private val _tickets = MutableStateFlow<List<TicketDto>>(emptyList())
     val tickets: StateFlow<List<TicketDto>> = _tickets
     //for loading error

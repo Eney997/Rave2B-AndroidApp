@@ -39,6 +39,7 @@ import androidx.core.content.ContextCompat
 import com.example.rave2b.R
 import com.example.rave2b.data.RetrofitClient
 import com.example.rave2b.data.TransactionDto
+import com.example.rave2b.networkpermission.isNetworkAvailable
 import kotlinx.coroutines.launch
 import kotlin.String
 
@@ -219,6 +220,15 @@ fun BuyTicketScreen(
                         cardCvv = cardCvv.value,
                         cardExpireDate = cardExpDate.value
                     )
+
+                    //no internet con handle
+                    if(!isNetworkAvailable(context))
+                    {
+                        corScope.launch {
+                            mySnackBarHostState.showSnackbar("No internet connection")
+                        }
+                        return@Button
+                    }
 
                     //empty input handle
                     if(cardHolderName.value.isEmpty() || cardHolderLastName.value.isEmpty() || cardDigits.value.isEmpty() || cardCvv.value.isEmpty() || cardExpDate.value.isEmpty())

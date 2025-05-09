@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.edit
 import com.example.rave2b.MainActivity
 import com.example.rave2b.R
+import com.example.rave2b.networkpermission.isNetworkAvailable
 import com.example.rave2b.popups.ChangePassword
 import com.example.rave2b.popups.DeleteUser
 
@@ -118,6 +119,10 @@ fun SettingsScreen()
                     Icon(painter = painterResource(id = R.drawable.ic_arrow_right), contentDescription = "Change password", tint = Color.White, modifier = Modifier
                         .padding(end = 20.dp)
                         .clickable {
+                            if(!isNetworkAvailable(context))
+                            {
+                                return@clickable
+                            }
                             showDialogPutPass  =  true
                         })
                 }
@@ -136,6 +141,10 @@ fun SettingsScreen()
                     Icon(painter = painterResource(id = R.drawable.ic_arrow_right), contentDescription = "Delete account", tint = Color.White, modifier = Modifier
                         .padding(end = 20.dp)
                         .clickable {
+                            if(!isNetworkAvailable(context))
+                            {
+                                return@clickable
+                            }
                             showDialogDelete = true
                         })
                 }
@@ -191,6 +200,10 @@ fun SettingsScreen()
                     Icon(painter = painterResource(id = R.drawable.ic_arrow_right), contentDescription = "Log out", tint = Color.White, modifier = Modifier
                         .padding(end = 20.dp)
                         .clickable {
+                            if(!isNetworkAvailable(context))
+                            {
+                                return@clickable
+                            }
                             sharedPref.edit { clear() }
                             val i = Intent(context, MainActivity::class.java)
                             i.flags =
