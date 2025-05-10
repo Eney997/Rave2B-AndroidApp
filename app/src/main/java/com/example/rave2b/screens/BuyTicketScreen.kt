@@ -39,7 +39,6 @@ import androidx.core.content.ContextCompat
 import com.example.rave2b.R
 import com.example.rave2b.data.RetrofitClient
 import com.example.rave2b.data.TransactionDto
-import com.example.rave2b.data.TransactionViewModel
 import com.example.rave2b.networkpermission.isNetworkAvailable
 import kotlinx.coroutines.launch
 import kotlin.String
@@ -224,6 +223,7 @@ fun BuyTicketScreen(
                         cardExpireDate = cardExpDate.value
                     )
 
+
                     //no internet con handle
                     if(!isNetworkAvailable(context))
                     {
@@ -290,21 +290,27 @@ fun BuyTicketScreen(
                     corScope.launch {
                         try {
                             val response = RetrofitClient.apiService.addTransaction(transaction)
-                            if(response.isSuccessful)
-                            {
-                                corScope.launch {
-                                    mySnackBarHostState.showSnackbar("Successful transaction.")
-                                }
+                            if (response.isSuccessful) {
+                                mySnackBarHostState.showSnackbar("Successful transaction.We will send QR code on your gmail.")
 
                                 cardHolderName.value = ""
                                 cardHolderLastName.value = ""
                                 cardDigits.value = ""
                                 cardCvv.value = ""
                                 cardExpDate.value = ""
+                            } else {
+                                //check if user already purchased ticket on 409 conflict
+                                when (response.code()) {
+                                    409 -> {
+                                        mySnackBarHostState.showSnackbar("You already purchased a ticket for this event.")
+                                    }
+                                    else -> {
+                                        Log.d("myLog","Failed to process transaction. Try again.")
+                                    }
+                                }
                             }
-
-                        }catch (e: Exception){
-                            Log.d("myLog","Coroutine error:${e.localizedMessage}")
+                        } catch (e: Exception) {
+                            Log.d("myLog", "Coroutine error: ${e.localizedMessage}")
                         }
                     }
                 },

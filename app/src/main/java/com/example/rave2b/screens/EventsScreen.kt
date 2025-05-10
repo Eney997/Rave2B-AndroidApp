@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -50,7 +51,7 @@ fun EventsScreen(myNavController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(top = 50.dp, bottom = 120.dp, start = 10.dp, end = 10.dp),
+            .padding(top = 50.dp, bottom = 110.dp, start = 10.dp, end = 10.dp),
         contentAlignment = Alignment.Center
     ) {
         when {
@@ -82,7 +83,8 @@ fun EventsScreen(myNavController: NavController) {
             }
 
             else -> {
-                LazyColumn(modifier = Modifier.fillMaxSize(), reverseLayout = true) {
+                LazyColumn(modifier = Modifier.fillMaxSize())
+                {
                     items(tickets) { ticket ->
                         TicketItem(ticket, myNavController)
                     }

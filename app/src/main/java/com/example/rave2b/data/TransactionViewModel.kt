@@ -22,7 +22,6 @@ class TransactionViewModel:ViewModel()
     private val _emptyMessage = MutableStateFlow<String?>(null)
     val emptyMessage: StateFlow<String?> = _emptyMessage
 
-
     fun fetchTransactions(username:String){
         viewModelScope.launch {
             _isLoading.value = true
