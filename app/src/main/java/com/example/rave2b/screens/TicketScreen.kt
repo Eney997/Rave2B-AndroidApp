@@ -133,7 +133,7 @@ fun PurchasedTickets(transaction: TransactionDto) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(200.dp)
+            .height(230.dp)
             .padding(bottom = 15.dp)
             .border(1.dp, Color.DarkGray, shape = RoundedCornerShape(10.dp))
             .clip(RoundedCornerShape(10.dp))
@@ -165,6 +165,7 @@ fun PurchasedTickets(transaction: TransactionDto) {
             Text("SET-II: ${transaction.djTwo}", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal, color = Color.White)
             Text("SET-III: ${transaction.djThree}", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal, color = Color.White)
             Text("SET-IV: ${transaction.djFour}", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal, color = Color.White)
+            Text("Price: ${transaction.price}", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal, color = Color.White)
             Text("Date: ${transaction.eventDateSave}", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal, color = Color.White)
         }
 

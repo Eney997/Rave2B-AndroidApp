@@ -109,7 +109,7 @@ fun TicketItem(ticket: TicketDto,myNavController: NavController)
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(250.dp)
+            .height(270.dp)
             .padding(bottom = 15.dp)
             .border(1.dp, Color.DarkGray, shape = RoundedCornerShape(10.dp))
             .clip(RoundedCornerShape(10.dp))
@@ -137,6 +137,7 @@ fun TicketItem(ticket: TicketDto,myNavController: NavController)
             Text("SET-III: ${ticket.djNameThree}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
             Text("SET-IV: ${ticket.djNameFour}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
             Text("Date: ${ticket.eventDate}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
+            Text("Price: ${ticket.price}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
 
             Spacer(modifier = Modifier.height(30.dp))
 
@@ -157,7 +158,7 @@ fun TicketItem(ticket: TicketDto,myNavController: NavController)
                         modifier = Modifier
                             .size(40.dp)
                             .clickable {
-                                myNavController.navigate("BuyTicketScreen/${ticket.djNameOne}/${ticket.djNameTwo}/${ticket.djNameThree}/${ticket.djNameFour}/${ticket.eventDate}")
+                                myNavController.navigate("BuyTicketScreen/${ticket.djNameOne}/${ticket.djNameTwo}/${ticket.djNameThree}/${ticket.djNameFour}/${ticket.price}/${ticket.eventDate}")
                             }
                     )
                 }

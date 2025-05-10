@@ -5,5 +5,6 @@ data class TicketDto(
     val djNameTwo: String,
     val djNameThree: String,
     val djNameFour: String,
+    val price: String,
     val eventDate: String
 )

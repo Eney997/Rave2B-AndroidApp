@@ -82,16 +82,17 @@ fun Navigation(navHostController: NavHostController)
         composable("EventsScreen"){EventsScreen(navHostController)}
         composable("TicketScreen"){ TicketScreen() }
         //to take special arguments from events screen
-        composable ( route = "BuyTicketScreen/{djNameOne}/{djNameTwo}/{djNameThree}/{djNameFour}/{eventDate}")
+        composable ( route = "BuyTicketScreen/{djNameOne}/{djNameTwo}/{djNameThree}/{djNameFour}/{price}/{eventDate}")
         { backStackEntry ->
 
             val djNameOne = backStackEntry.arguments?.getString("djNameOne") ?: ""
             val djNameTwo = backStackEntry.arguments?.getString("djNameTwo") ?: ""
             val djNameThree = backStackEntry.arguments?.getString("djNameThree") ?: ""
             val djNameFour = backStackEntry.arguments?.getString("djNameFour") ?: ""
+            val price = backStackEntry.arguments?.getString("price") ?: ""
             val eventDate = backStackEntry.arguments?.getString("eventDate") ?: ""
 
-            BuyTicketScreen(djNameOne,djNameTwo,djNameThree,djNameFour,eventDate)
+            BuyTicketScreen(djNameOne,djNameTwo,djNameThree,djNameFour,price,eventDate)
         }
         composable("SettingsScreen"){ SettingsScreen() }
     }

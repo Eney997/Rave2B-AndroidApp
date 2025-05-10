@@ -39,6 +39,7 @@ import androidx.core.content.ContextCompat
 import com.example.rave2b.R
 import com.example.rave2b.data.RetrofitClient
 import com.example.rave2b.data.TransactionDto
+import com.example.rave2b.data.TransactionViewModel
 import com.example.rave2b.networkpermission.isNetworkAvailable
 import kotlinx.coroutines.launch
 import kotlin.String
@@ -49,7 +50,8 @@ fun BuyTicketScreen(
     djNameTwo: String,
     djNameThree: String,
     djNameFour: String,
-    eventDate: String,
+    price: String,
+    eventDate: String
 )
 {
     val context = LocalContext.current
@@ -213,6 +215,7 @@ fun BuyTicketScreen(
                         djTwo = djNameTwo,
                         djThree = djNameThree,
                         djFour = djNameFour,
+                        price = price,
                         eventDateSave = eventDate,
                         cardHolderName = cardHolderName.value,
                         cardHolderLastName = cardHolderLastName.value,

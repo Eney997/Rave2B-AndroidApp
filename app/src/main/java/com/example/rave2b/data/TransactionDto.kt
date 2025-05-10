@@ -6,6 +6,7 @@ data class TransactionDto(
     val djTwo: String,
     val djThree: String,
     val djFour: String,
+    val price: String,
     val eventDateSave: String,
     val cardHolderName: String,
     val cardHolderLastName: String,
