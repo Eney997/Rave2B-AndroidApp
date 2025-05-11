@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.example.rave2b.R
-import com.example.rave2b.data.RegistrationDto
+import com.example.rave2b.dtos.RegistrationDto
 import com.example.rave2b.data.RetrofitClient
 import com.example.rave2b.networkpermission.isNetworkAvailable
 import kotlinx.coroutines.launch

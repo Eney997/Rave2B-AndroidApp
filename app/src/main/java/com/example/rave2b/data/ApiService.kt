@@ -1,5 +1,9 @@
 package com.example.rave2b.data
 
+import com.example.rave2b.dtos.LoginDto
+import com.example.rave2b.dtos.RegistrationDto
+import com.example.rave2b.dtos.TicketDto
+import com.example.rave2b.dtos.TransactionDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -11,7 +15,7 @@ import retrofit2.http.Path
 interface ApiService {
     //for registration to create account
     @POST("api/registration")
-    suspend fun createUser(@Body registration:RegistrationDto):Response<Void>
+    suspend fun createUser(@Body registration: RegistrationDto):Response<Void>
     //for log in
     @POST("api/registration/login")
     suspend fun loginUser(@Body loginDto: LoginDto): Response<Void>

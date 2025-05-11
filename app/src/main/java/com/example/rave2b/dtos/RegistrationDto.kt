@@ -1,4 +1,4 @@
-package com.example.rave2b.data
+package com.example.rave2b.dtos
 
 data class RegistrationDto(
     val username: String,

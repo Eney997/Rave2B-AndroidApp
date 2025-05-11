@@ -30,8 +30,8 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.rave2b.R
-import com.example.rave2b.data.TicketDto
-import com.example.rave2b.data.TicketViewModel
+import com.example.rave2b.dtos.TicketDto
+import com.example.rave2b.viewmodels.TicketViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

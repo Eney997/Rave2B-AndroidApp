@@ -1,4 +1,4 @@
-package com.example.rave2b.data
+package com.example.rave2b.dtos
 
 data class TicketDto(
     val djNameOne: String,

@@ -41,7 +41,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.navigation.NavController
 import com.example.rave2b.R
-import com.example.rave2b.data.LoginDto
+import com.example.rave2b.dtos.LoginDto
 import com.example.rave2b.data.RetrofitClient
 import com.example.rave2b.networkpermission.isNetworkAvailable
 import kotlinx.coroutines.launch

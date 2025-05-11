@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.rave2b.R
-import com.example.rave2b.data.TransactionDto
-import com.example.rave2b.data.TransactionViewModel
+import com.example.rave2b.dtos.TransactionDto
+import com.example.rave2b.viewmodels.TransactionViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
