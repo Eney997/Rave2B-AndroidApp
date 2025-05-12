@@ -1,5 +1,6 @@
-Rave2B 🎫
-Rave2B is a rave ticketing Android app for techno lovers. Built with Kotlin and Jetpack Compose, it lets users register, browse events, and purchase tickets—all in real time.
+Rave2B - Android Rave Ticketing App
+
+Rave2B is a rave ticketing Android application built for techno enthusiasts. It allows users to register, browse upcoming rave events, and purchase tickets directly from their phone with real-time updates. The app is built using Kotlin, Jetpack Compose, and integrates with a custom ASP.NET Core Web API backend connected to an MS SQL Server database.
 
 🚀 Features
 - Register & log in with unique username/ID
