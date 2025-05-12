@@ -1,30 +1,74 @@
-Rave2B - Android Rave Ticketing App
+🎫 Rave2B – Techno Rave Ticketing App for Android
 
-Rave2B is a rave ticketing Android application built for techno enthusiasts. It allows users to register, browse upcoming rave events, and purchase tickets directly from their phone with real-time updates. The app is built using Kotlin, Jetpack Compose, and integrates with a custom ASP.NET Core Web API backend connected to an MS SQL Server database.
+---
+Rave2B is a sleek and dynamic Android application designed for techno rave enthusiasts. Built using Kotlin and Jetpack Compose, it lets users explore upcoming rave events, purchase tickets, and receive QR-coded confirmations—all in real time. The app integrates tightly with an ASP.NET Core Web API and MS SQL Server backend to deliver a seamless and secure ticketing experience.
 
-🚀 Features
-- Register & log in with unique username/ID
+---
 
-- Browse future & past rave events
+✨ Features
+🔐 Authentication
+Register & Login with strong input validation
 
-- Buy 1 ticket per event (past events disabled)
+Enforced unique usernames
 
-- Receive QR-coded ticket via email after purchase
+User info stored securely on the backend
 
-- View purchased tickets in a separate screen
+🧠 Session Management
+SharedPreferences used to manage login state
 
-- Change password, delete account, or log out
+Auto-login for smooth user re-entry
 
-🛠 Tech Stack
-- Kotlin, Jetpack Compose, ViewModel, Coroutines
+📅 Event Browsing
+Scrollable list of future and past events
 
-- Retrofit for API calls
+Powered by ViewModel and LazyColumn
 
-- SharedPreferences for local state
+Smart filters disable ticket purchases for past events
 
-- ASP.NET Core Web API + MS SQL Server (backend)
+🎟️ Ticket Purchasing
+One ticket per event per user (validated by backend)
 
-⚙️ Requirements
-Android Studio
+Real-time purchase updates using Retrofit
 
-- Internet connection (app is fully online)
+QR-coded confirmation email sent after each successful purchase
+
+🎫 Bought Tickets Screen
+Displays real-time data of purchased tickets
+
+Data tied to the logged-in user
+
+⚙️ Settings
+Change password and delete account
+
+View app info and log out securely
+
+🌐 Requirements
+Internet connection required for:
+
+Viewing events
+
+Purchasing tickets
+
+Receiving email confirmations
+
+🛠️ Tech Stack
+Kotlin
+
+Jetpack Compose
+
+ViewModel + Coroutines
+
+Retrofit (API Communication)
+
+SharedPreferences (Login State)
+
+ASP.NET Core Web API (Backend)
+
+MS SQL Server (Database)
+
+📱 UI/UX
+Clean, dark-themed rave-inspired interface
+
+Responsive layouts built with Jetpack Compose
+
+Smooth navigation and real-time feedback
