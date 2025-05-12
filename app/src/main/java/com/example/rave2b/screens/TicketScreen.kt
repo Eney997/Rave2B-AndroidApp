@@ -51,7 +51,7 @@ fun TicketScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(top = 50.dp, bottom = 120.dp, start = 10.dp, end = 10.dp),
+            .padding(top = 50.dp, bottom = 110.dp, start = 10.dp, end = 10.dp),
     ) {
         when {
 
@@ -114,11 +114,8 @@ fun TicketScreen() {
             }
 
             else -> {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    items(transactions) { tran ->
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(transactions.reversed()) { tran ->
                         PurchasedTickets(tran)
                     }
                 }

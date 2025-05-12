@@ -83,9 +83,8 @@ fun EventsScreen(myNavController: NavController) {
             }
 
             else -> {
-                LazyColumn(modifier = Modifier.fillMaxSize())
-                {
-                    items(tickets) { ticket ->
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(tickets.reversed()) { ticket ->
                         TicketItem(ticket, myNavController)
                     }
                 }

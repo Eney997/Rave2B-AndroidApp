@@ -291,13 +291,13 @@ fun BuyTicketScreen(
                         try {
                             val response = RetrofitClient.apiService.addTransaction(transaction)
                             if (response.isSuccessful) {
-                                mySnackBarHostState.showSnackbar("Successful transaction.We will send QR code on your gmail.")
-
                                 cardHolderName.value = ""
                                 cardHolderLastName.value = ""
                                 cardDigits.value = ""
                                 cardCvv.value = ""
                                 cardExpDate.value = ""
+
+                                mySnackBarHostState.showSnackbar("Successful transaction.We will send QR code on your gmail.")
                             } else {
                                 //check if user already purchased ticket on 409 conflict
                                 when (response.code()) {
