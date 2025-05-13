@@ -38,11 +38,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun ChangePassword
-(
+fun ChangePassword(
     onDismiss: () -> Unit
-)
-{
+) {
     val txt = remember { mutableStateOf("") }
     val context = LocalContext.current
     val alertColor = Color(ContextCompat.getColor(context, R.color.snackBarColor))
@@ -71,7 +69,7 @@ fun ChangePassword
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text  = when {
+                    text = when {
                         errorMessage.value.isEmpty() -> "Please enter new password!"
                         else -> errorMessage.value
                     },
@@ -95,7 +93,12 @@ fun ChangePassword
                         focusedIndicatorColor = Color.White,
                     ),
                     placeholder = {
-                        Text(text = "TYPE", color = Color.White, fontSize = 19.sp,fontWeight = FontWeight.Bold)
+                        Text(
+                            text = "TYPE",
+                            color = Color.White,
+                            fontSize = 19.sp,
+                            fontWeight = FontWeight.Bold
+                        )
                     },
                     maxLines = 1,
                     textStyle = TextStyle(
@@ -111,14 +114,12 @@ fun ChangePassword
                         val username = sharedPref.getString("username", "") ?: ""
 
                         //Empty text field input handle
-                        if(txt.value.isEmpty())
-                        {
+                        if (txt.value.isEmpty()) {
                             errorMessage.value = "Empty input."
                             return@Button
                         }
 
-                        if(txt.value.length < 7)
-                        {
+                        if (txt.value.length < 7) {
                             errorMessage.value = "Password minimum length is 7."
                             return@Button
                         }
@@ -150,7 +151,8 @@ fun ChangePassword
                         }
                     },
                     modifier = Modifier
-                        .height(50.dp).width(120.dp)
+                        .height(50.dp)
+                        .width(120.dp)
                         .border(1.dp, Color.LightGray, shape = RoundedCornerShape(10.dp)),
                     colors = ButtonDefaults.buttonColors(containerColor = alertColor),
                 ) {

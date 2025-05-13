@@ -42,8 +42,7 @@ import com.example.rave2b.MainActivity
 @Composable
 fun DeleteUser(
     onDismiss: () -> Unit
-)
-{
+) {
     val txt = remember { mutableStateOf("") }
     val context = LocalContext.current
     val alertColor = Color(ContextCompat.getColor(context, R.color.snackBarColor))
@@ -72,10 +71,10 @@ fun DeleteUser(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text  = when {
+                    text = when {
                         errorMessage.value.isEmpty() -> "Please enter your username!"
                         else -> errorMessage.value
-                     },
+                    },
                     fontSize = 16.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
@@ -96,7 +95,12 @@ fun DeleteUser(
                         focusedIndicatorColor = Color.White,
                     ),
                     placeholder = {
-                        Text(text = "TYPE", color = Color.White, fontSize = 19.sp,fontWeight = FontWeight.Bold)
+                        Text(
+                            text = "TYPE",
+                            color = Color.White,
+                            fontSize = 19.sp,
+                            fontWeight = FontWeight.Bold
+                        )
                     },
                     maxLines = 1,
                     textStyle = TextStyle(
@@ -112,8 +116,7 @@ fun DeleteUser(
                         val username = sharedPref.getString("username", "") ?: ""
 
                         //Empty text field input handle
-                        if(txt.value.isEmpty())
-                        {
+                        if (txt.value.isEmpty()) {
                             errorMessage.value = "Empty input."
                             return@Button
                         }
@@ -124,14 +127,20 @@ fun DeleteUser(
                             return@Button
                         }
 
-                        if (username != txt.value)
-                        {
+                        if (username != txt.value) {
                             errorMessage.value = "Enter your username."
                             return@Button
                         }
                         //coroutine scope for deleting in database
                         coroutineScope.launch {
                             try {
+                                //delete all transactions under username
+                                val deleteTransaction = apiService.deleteTransaction(username)
+                                if (deleteTransaction.isSuccessful) {
+                                    Log.d("myLog", "Transaction deleted successfully")
+                                }
+
+                                //delete user
                                 val response = apiService.deleteUser(username)
                                 if (response.isSuccessful) {
                                     // Optional: Clear SharedPreferences and close app or redirect
@@ -150,7 +159,8 @@ fun DeleteUser(
                         }
                     },
                     modifier = Modifier
-                        .height(50.dp).width(120.dp)
+                        .height(50.dp)
+                        .width(120.dp)
                         .border(1.dp, Color.LightGray, shape = RoundedCornerShape(10.dp)),
                     colors = ButtonDefaults.buttonColors(containerColor = alertColor),
                 ) {

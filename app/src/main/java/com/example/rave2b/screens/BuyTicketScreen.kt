@@ -51,8 +51,7 @@ fun BuyTicketScreen(
     djNameFour: String,
     price: String,
     eventDate: String
-)
-{
+) {
     val context = LocalContext.current
     val sharedPref = context.getSharedPreferences("user_pref", Context.MODE_PRIVATE)
     val username = sharedPref.getString("username", "")
@@ -70,17 +69,19 @@ fun BuyTicketScreen(
             .fillMaxSize()
             .background(Color.Black),
         contentAlignment = Alignment.Center
-    ){
-        Column ( modifier = Modifier
-            .fillMaxWidth()
-            .verticalScroll(scroll)
-            .padding(start = 20.dp, end = 20.dp, bottom = 120.dp),
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(scroll)
+                .padding(start = 20.dp, end = 20.dp, bottom = 120.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
             TextField(
                 value = cardHolderName.value,
-                onValueChange = { val filteredName = it.filter { char -> char.isLetter()}.uppercase()
+                onValueChange = {
+                    val filteredName = it.filter { char -> char.isLetter() }.uppercase()
                     cardHolderName.value = filteredName
                 },
                 modifier = Modifier
@@ -92,7 +93,14 @@ fun BuyTicketScreen(
                     disabledContainerColor = Color.Transparent,
                     focusedIndicatorColor = Color.White,
                 ),
-                placeholder = { Text("Card Holder Name", color = Color.Gray, style = MaterialTheme.typography.titleMedium,fontSize = 19.sp) },
+                placeholder = {
+                    Text(
+                        "Card Holder Name",
+                        color = Color.Gray,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontSize = 19.sp
+                    )
+                },
                 maxLines = 1,
                 textStyle = MaterialTheme.typography.titleMedium.copy(
                     color = Color.White,
@@ -105,7 +113,7 @@ fun BuyTicketScreen(
             TextField(
                 value = cardHolderLastName.value,
                 onValueChange = {
-                    val filteredLastName = it.filter { char -> char.isLetter()}.uppercase()
+                    val filteredLastName = it.filter { char -> char.isLetter() }.uppercase()
                     cardHolderLastName.value = filteredLastName
                 },
                 modifier = Modifier
@@ -117,7 +125,14 @@ fun BuyTicketScreen(
                     disabledContainerColor = Color.Transparent,
                     focusedIndicatorColor = Color.White,
                 ),
-                placeholder = { Text("Card Holder Last Name", color = Color.Gray, style = MaterialTheme.typography.titleMedium,fontSize = 19.sp) },
+                placeholder = {
+                    Text(
+                        "Card Holder Last Name",
+                        color = Color.Gray,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontSize = 19.sp
+                    )
+                },
                 maxLines = 1,
                 textStyle = MaterialTheme.typography.titleMedium.copy(
                     color = Color.White,
@@ -142,7 +157,14 @@ fun BuyTicketScreen(
                     disabledContainerColor = Color.Transparent,
                     focusedIndicatorColor = Color.White,
                 ),
-                placeholder = { Text("Card 16 digit number",color = Color.Gray,style = MaterialTheme.typography.titleMedium,fontSize = 19.sp) },
+                placeholder = {
+                    Text(
+                        "Card 16 digit number",
+                        color = Color.Gray,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontSize = 19.sp
+                    )
+                },
                 maxLines = 1,
                 textStyle = MaterialTheme.typography.titleMedium.copy(
                     color = Color.White,
@@ -152,7 +174,7 @@ fun BuyTicketScreen(
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            Row (modifier = Modifier,horizontalArrangement = Arrangement.spacedBy(10.dp))
+            Row(modifier = Modifier, horizontalArrangement = Arrangement.spacedBy(10.dp))
             {
                 TextField(
                     value = cardCvv.value,
@@ -169,7 +191,14 @@ fun BuyTicketScreen(
                         disabledContainerColor = Color.Transparent,
                         focusedIndicatorColor = Color.White,
                     ),
-                    placeholder = { Text("Cvv/Cvc", color = Color.Gray,style = MaterialTheme.typography.titleMedium,fontSize = 19.sp) },
+                    placeholder = {
+                        Text(
+                            "Cvv/Cvc",
+                            color = Color.Gray,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontSize = 19.sp
+                        )
+                    },
                     maxLines = 1,
                     textStyle = MaterialTheme.typography.titleMedium.copy(
                         color = Color.White,
@@ -194,7 +223,14 @@ fun BuyTicketScreen(
                         disabledContainerColor = Color.Transparent,
                         focusedIndicatorColor = Color.White,
                     ),
-                    placeholder = { Text("Exp.Year", color = Color.Gray,style = MaterialTheme.typography.titleMedium,fontSize = 19.sp) },
+                    placeholder = {
+                        Text(
+                            "Exp.Year",
+                            color = Color.Gray,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontSize = 19.sp
+                        )
+                    },
                     maxLines = 1,
                     textStyle = MaterialTheme.typography.titleMedium.copy(
                         color = Color.White,
@@ -225,8 +261,7 @@ fun BuyTicketScreen(
 
 
                     //no internet con handle
-                    if(!isNetworkAvailable(context))
-                    {
+                    if (!isNetworkAvailable(context)) {
                         corScope.launch {
                             mySnackBarHostState.showSnackbar("No internet connection")
                         }
@@ -234,8 +269,7 @@ fun BuyTicketScreen(
                     }
 
                     //empty input handle
-                    if(cardHolderName.value.isEmpty() || cardHolderLastName.value.isEmpty() || cardDigits.value.isEmpty() || cardCvv.value.isEmpty() || cardExpDate.value.isEmpty())
-                    {
+                    if (cardHolderName.value.isEmpty() || cardHolderLastName.value.isEmpty() || cardDigits.value.isEmpty() || cardCvv.value.isEmpty() || cardExpDate.value.isEmpty()) {
                         corScope.launch {
                             mySnackBarHostState.showSnackbar("Please fill all fields")
                         }
@@ -243,7 +277,7 @@ fun BuyTicketScreen(
                     }
 
                     //card holder name and lastname max len
-                    if(cardHolderName.value.length > 25 || cardHolderLastName.value.length > 25) {
+                    if (cardHolderName.value.length > 25 || cardHolderLastName.value.length > 25) {
                         corScope.launch {
                             mySnackBarHostState.showSnackbar("You are out of card holder name or lastname length.")
                         }
@@ -251,8 +285,7 @@ fun BuyTicketScreen(
                     }
 
                     //card holder name and lastname min len
-                    if(cardHolderName.value.length < 2 || cardHolderLastName.value.length < 2)
-                    {
+                    if (cardHolderName.value.length < 2 || cardHolderLastName.value.length < 2) {
                         corScope.launch {
                             mySnackBarHostState.showSnackbar("Name or lastname minimum length is 2.")
                         }
@@ -260,8 +293,7 @@ fun BuyTicketScreen(
                     }
 
                     //card digits len
-                    if(cardDigits.value.length != 16)
-                    {
+                    if (cardDigits.value.length != 16) {
                         corScope.launch {
                             mySnackBarHostState.showSnackbar("Card digits length is incorrect.")
                         }
@@ -270,8 +302,7 @@ fun BuyTicketScreen(
 
                     //exp year handle
                     //handle exp year
-                    if(cardExpDate.value.length != 4 || cardExpDate.value.toInt() !in 2025..2035)
-                    {
+                    if (cardExpDate.value.length != 4 || cardExpDate.value.toInt() !in 2025..2035) {
                         corScope.launch {
                             mySnackBarHostState.showSnackbar("Please enter a valid year,in range 2025-2035")
                         }
@@ -279,8 +310,7 @@ fun BuyTicketScreen(
                     }
 
                     //cvv or cvc handle
-                    if(cardCvv.value.length != 3)
-                    {
+                    if (cardCvv.value.length != 3) {
                         corScope.launch {
                             mySnackBarHostState.showSnackbar("Cvv or Cvc length is incorrect.")
                         }
@@ -304,8 +334,9 @@ fun BuyTicketScreen(
                                     409 -> {
                                         mySnackBarHostState.showSnackbar("You already purchased a ticket for this event.")
                                     }
+
                                     else -> {
-                                        Log.d("myLog","Failed to process transaction. Try again.")
+                                        Log.d("myLog", "Failed to process transaction. Try again.")
                                     }
                                 }
                             }
@@ -325,7 +356,12 @@ fun BuyTicketScreen(
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             )
             {
-                Text(text = "Confirm", color = Color.Gray, style = MaterialTheme.typography.titleMedium,fontSize = 19.sp)
+                Text(
+                    text = "Confirm",
+                    color = Color.Gray,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontSize = 19.sp
+                )
             }
         }
 
@@ -337,7 +373,12 @@ fun BuyTicketScreen(
             snackbar = { data ->
                 Snackbar(
                     snackbarData = data,
-                    containerColor = Color(ContextCompat.getColor(LocalContext.current,R.color.snackBarColor)),
+                    containerColor = Color(
+                        ContextCompat.getColor(
+                            LocalContext.current,
+                            R.color.snackBarColor
+                        )
+                    ),
                     contentColor = Color.White
                 )
             }

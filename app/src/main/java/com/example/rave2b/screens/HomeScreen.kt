@@ -34,18 +34,19 @@ import androidx.core.content.ContextCompat
 import com.example.rave2b.R
 
 @Composable
-fun HomeScreen()
-{
+fun HomeScreen() {
     val scroll = rememberScrollState()
     val raveObligationTitle = stringArrayResource(id = R.array.rave_obligation_titles)
     val raveObligationDesc = stringArrayResource(id = R.array.rave_obligation_descriptions)
     val raveObligations = raveObligationTitle.zip(raveObligationDesc)
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Black)
-        .padding(top = 50.dp, bottom = 120.dp, start = 10.dp, end = 10.dp),
-        contentAlignment = Alignment.TopStart)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
+            .padding(top = 50.dp, bottom = 120.dp, start = 10.dp, end = 10.dp),
+        contentAlignment = Alignment.TopStart
+    )
     {
         Column(
             modifier = Modifier
@@ -53,7 +54,7 @@ fun HomeScreen()
                 .verticalScroll(scroll)
         )
         {
-            Column (modifier = Modifier.clip(RoundedCornerShape(10.dp))){
+            Column(modifier = Modifier.clip(RoundedCornerShape(10.dp))) {
 
                 Image(
                     painter = painterResource(id = R.drawable.hometop),
@@ -77,7 +78,14 @@ fun HomeScreen()
                         modifier = Modifier
                             .width(300.dp)
                             .height(150.dp)
-                            .background(color = Color(color = ContextCompat.getColor(LocalContext.current, R.color.snackBarColor)), shape = RoundedCornerShape(10.dp))
+                            .background(
+                                color = Color(
+                                    color = ContextCompat.getColor(
+                                        LocalContext.current,
+                                        R.color.snackBarColor
+                                    )
+                                ), shape = RoundedCornerShape(10.dp)
+                            )
                             .border(1.dp, Color.DarkGray, shape = RoundedCornerShape(10.dp)),
                         contentAlignment = Alignment.TopStart
                     ) {

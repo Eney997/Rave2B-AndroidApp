@@ -9,13 +9,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class TicketViewModel : ViewModel()
-{
+class TicketViewModel : ViewModel() {
     private val _tickets = MutableStateFlow<List<TicketDto>>(emptyList())
     val tickets: StateFlow<List<TicketDto>> = _tickets
+
     //for loading error
     private val _isLoading = MutableStateFlow(true)
     val isLoading: StateFlow<Boolean> = _isLoading
+
     //for internet error
     private val _hasInternetError = MutableStateFlow(false)
     val hasInternetError: StateFlow<Boolean> = _hasInternetError
@@ -29,13 +30,13 @@ class TicketViewModel : ViewModel()
                 if (response.isSuccessful) {
                     delay(500)
                     _tickets.value = response.body() ?: emptyList()
-                }else {
+                } else {
                     _hasInternetError.value = true
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
                 _hasInternetError.value = true
-            }finally {
+            } finally {
                 _isLoading.value = false
             }
         }

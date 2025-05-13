@@ -40,8 +40,7 @@ import com.example.rave2b.popups.ChangePassword
 import com.example.rave2b.popups.DeleteUser
 
 @Composable
-fun SettingsScreen()
-{
+fun SettingsScreen() {
     val scrollIfNeeded = rememberScrollState()
     val context = LocalContext.current
     val sharedPref = context.getSharedPreferences("user_pref", Context.MODE_PRIVATE)
@@ -51,25 +50,27 @@ fun SettingsScreen()
     var showDialogPutPass by remember { mutableStateOf(false) }
 
     //show dialog box for delete user
-    if (showDialogDelete && username != null)
-    {
-        DeleteUser (onDismiss = {showDialogDelete = false})
+    if (showDialogDelete && username != null) {
+        DeleteUser(onDismiss = { showDialogDelete = false })
     }
 
     //show dialog box for update password
-    if (showDialogPutPass && username != null)
-    {
-        ChangePassword (onDismiss = {showDialogPutPass = false})
+    if (showDialogPutPass && username != null) {
+        ChangePassword(onDismiss = { showDialogPutPass = false })
     }
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Black), contentAlignment = Alignment.TopStart)
-    {
-        Column(modifier = Modifier
+    Box(
+        modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(scrollIfNeeded)
-            .padding(bottom = 100.dp))
+            .background(Color.Black), contentAlignment = Alignment.TopStart
+    )
+    {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollIfNeeded)
+                .padding(bottom = 100.dp)
+        )
         {
             Row(
                 modifier = Modifier
@@ -78,7 +79,8 @@ fun SettingsScreen()
                 verticalAlignment = Alignment.CenterVertically
             )
             {
-                Icon(painter = painterResource(id = R.drawable.ic_person),
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_person),
                     contentDescription = "user icon",
                     tint = Color.White,
                     modifier = Modifier
@@ -90,80 +92,131 @@ fun SettingsScreen()
 
                 Column(modifier = Modifier.fillMaxWidth())
                 {
-                    Text("$username", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Medium)
+                    Text(
+                        "$username",
+                        color = Color.White,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Medium
+                    )
                 }
             }
 
-            HorizontalDivider(modifier = Modifier
-                .padding(top = 10.dp,start = 20.dp,end = 20.dp),
+            HorizontalDivider(
+                modifier = Modifier
+                    .padding(top = 10.dp, start = 20.dp, end = 20.dp),
                 thickness = 1.dp,
                 color = Color.DarkGray
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Column (modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp))
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, end = 20.dp)
+            )
             {
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(70.dp)
-                    .padding(), verticalAlignment = Alignment.CenterVertically)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(70.dp)
+                        .padding(), verticalAlignment = Alignment.CenterVertically
+                )
                 {
-                    Icon(painter = painterResource(id = R.drawable.ic_password), contentDescription = "Change password", tint = Color.White)
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_password),
+                        contentDescription = "Change password",
+                        tint = Color.White
+                    )
                     Spacer(modifier = Modifier.width(10.dp))
-                    Text(text = "Change Password", color = Color.White, fontSize = 20.sp,fontWeight = FontWeight.Medium)
+                    Text(
+                        text = "Change Password",
+                        color = Color.White,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Medium
+                    )
                     Spacer(modifier = Modifier.weight(1f))
-                    Icon(painter = painterResource(id = R.drawable.ic_arrow_right), contentDescription = "Change password", tint = Color.White, modifier = Modifier
-                        .padding(end = 20.dp)
-                        .clickable {
-                            if(!isNetworkAvailable(context))
-                            {
-                                return@clickable
-                            }
-                            showDialogPutPass  =  true
-                        })
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_arrow_right),
+                        contentDescription = "Change password",
+                        tint = Color.White,
+                        modifier = Modifier
+                            .padding(end = 20.dp)
+                            .clickable {
+                                if (!isNetworkAvailable(context)) {
+                                    return@clickable
+                                }
+                                showDialogPutPass = true
+                            })
                 }
 
-                HorizontalDivider(modifier = Modifier,thickness = 1.dp, color = Color.DarkGray)
+                HorizontalDivider(modifier = Modifier, thickness = 1.dp, color = Color.DarkGray)
 
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(70.dp)
-                    .padding(), verticalAlignment = Alignment.CenterVertically)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(70.dp)
+                        .padding(), verticalAlignment = Alignment.CenterVertically
+                )
                 {
-                    Icon(painter = painterResource(id = R.drawable.ic_delete), contentDescription = "Delete account", tint = Color.White)
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_delete),
+                        contentDescription = "Delete account",
+                        tint = Color.White
+                    )
                     Spacer(modifier = Modifier.width(10.dp))
-                    Text(text = "Delete account", color = Color.White, fontSize = 20.sp,fontWeight = FontWeight.Medium)
+                    Text(
+                        text = "Delete account",
+                        color = Color.White,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Medium
+                    )
                     Spacer(modifier = Modifier.weight(1f))
-                    Icon(painter = painterResource(id = R.drawable.ic_arrow_right), contentDescription = "Delete account", tint = Color.White, modifier = Modifier
-                        .padding(end = 20.dp)
-                        .clickable {
-                            if(!isNetworkAvailable(context))
-                            {
-                                return@clickable
-                            }
-                            showDialogDelete = true
-                        })
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_arrow_right),
+                        contentDescription = "Delete account",
+                        tint = Color.White,
+                        modifier = Modifier
+                            .padding(end = 20.dp)
+                            .clickable {
+                                if (!isNetworkAvailable(context)) {
+                                    return@clickable
+                                }
+                                showDialogDelete = true
+                            })
                 }
 
-                HorizontalDivider(modifier = Modifier,thickness = 1.dp, color = Color.DarkGray)
+                HorizontalDivider(modifier = Modifier, thickness = 1.dp, color = Color.DarkGray)
 
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(70.dp)
-                    .padding(), verticalAlignment = Alignment.CenterVertically)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(70.dp)
+                        .padding(), verticalAlignment = Alignment.CenterVertically
+                )
                 {
-                    Icon(painter = painterResource(id = R.drawable.ic_smartphone), contentDescription = "App Story", tint = Color.White)
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_smartphone),
+                        contentDescription = "App Story",
+                        tint = Color.White
+                    )
                     Spacer(modifier = Modifier.width(10.dp))
-                    Text(text = "About App", color = Color.White, fontSize = 20.sp,fontWeight = FontWeight.Medium)
+                    Text(
+                        text = "About App",
+                        color = Color.White,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Medium
+                    )
                     Spacer(modifier = Modifier.weight(1f))
-                    Icon(painter = painterResource(id = R.drawable.ic_arrow_right), contentDescription = "About App", tint = Color.White, modifier = Modifier
-                        .padding(end = 20.dp)
-                        .clickable {
-                            isTextVisible = !isTextVisible
-                        })
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_arrow_right),
+                        contentDescription = "About App",
+                        tint = Color.White,
+                        modifier = Modifier
+                            .padding(end = 20.dp)
+                            .clickable {
+                                isTextVisible = !isTextVisible
+                            })
                 }
 
                 AnimatedVisibility(visible = isTextVisible)
@@ -185,30 +238,44 @@ fun SettingsScreen()
                     )
                 }
 
-                HorizontalDivider(modifier = Modifier,thickness = 1.dp, color = Color.DarkGray)
+                HorizontalDivider(modifier = Modifier, thickness = 1.dp, color = Color.DarkGray)
 
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(70.dp)
-                    .padding(), verticalAlignment = Alignment.CenterVertically)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(70.dp)
+                        .padding(), verticalAlignment = Alignment.CenterVertically
+                )
                 {
-                    Icon(painter = painterResource(id = R.drawable.ic_exit), contentDescription = "Log out", tint = Color.White)
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_exit),
+                        contentDescription = "Log out",
+                        tint = Color.White
+                    )
                     Spacer(modifier = Modifier.width(10.dp))
-                    Text(text = "Log out", color = Color.White, fontSize = 20.sp,fontWeight = FontWeight.Medium)
+                    Text(
+                        text = "Log out",
+                        color = Color.White,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Medium
+                    )
                     Spacer(modifier = Modifier.weight(1f))
-                    Icon(painter = painterResource(id = R.drawable.ic_arrow_right), contentDescription = "Log out", tint = Color.White, modifier = Modifier
-                        .padding(end = 20.dp)
-                        .clickable {
-                            if(!isNetworkAvailable(context))
-                            {
-                                return@clickable
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_arrow_right),
+                        contentDescription = "Log out",
+                        tint = Color.White,
+                        modifier = Modifier
+                            .padding(end = 20.dp)
+                            .clickable {
+                                if (!isNetworkAvailable(context)) {
+                                    return@clickable
+                                }
+                                sharedPref.edit { clear() }
+                                val i = Intent(context, MainActivity::class.java)
+                                i.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                context.startActivity(i)
                             }
-                            sharedPref.edit { clear() }
-                            val i = Intent(context, MainActivity::class.java)
-                            i.flags =
-                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            context.startActivity(i)
-                        }
                     )
                 }
             }

@@ -49,8 +49,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun AppLoginScreen(
     myNavController: NavController
-)
-{
+) {
     val context = LocalContext.current
     val mySnackBarHostState = remember { SnackbarHostState() }
     val corScope = rememberCoroutineScope()
@@ -58,7 +57,9 @@ fun AppLoginScreen(
     val userPassword = remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(false) }
 
-    Box(modifier = Modifier.fillMaxSize().background(Color.Black))
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.Black))
     {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -78,7 +79,14 @@ fun AppLoginScreen(
                     disabledContainerColor = Color.Transparent,
                     focusedIndicatorColor = Color.White,
                 ),
-                placeholder = { Text("Enter Username", color = Color.Gray, style = MaterialTheme.typography.titleMedium,fontSize = 19.sp) },
+                placeholder = {
+                    Text(
+                        "Enter Username",
+                        color = Color.Gray,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontSize = 19.sp
+                    )
+                },
                 maxLines = 1,
                 textStyle = MaterialTheme.typography.titleMedium.copy(
                     color = Color.White,
@@ -100,7 +108,14 @@ fun AppLoginScreen(
                     disabledContainerColor = Color.Transparent,
                     focusedIndicatorColor = Color.White,
                 ),
-                placeholder = { Text("Enter Password", color = Color.Gray, style = MaterialTheme.typography.titleMedium,fontSize = 19.sp) },
+                placeholder = {
+                    Text(
+                        "Enter Password",
+                        color = Color.Gray,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontSize = 19.sp
+                    )
+                },
                 maxLines = 1,
                 textStyle = MaterialTheme.typography.titleMedium.copy(
                     color = Color.White,
@@ -108,11 +123,15 @@ fun AppLoginScreen(
                 ),
 
                 trailingIcon = {
-                    TextButton(onClick = {isPasswordVisible = !isPasswordVisible}){
-                        Text(text = if(isPasswordVisible) "Hide?" else "Show?", color = Color.Gray, style = MaterialTheme.typography.titleMedium)
+                    TextButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                        Text(
+                            text = if (isPasswordVisible) "Hide?" else "Show?",
+                            color = Color.Gray,
+                            style = MaterialTheme.typography.titleMedium
+                        )
                     }
                 },
-                visualTransformation = if(isPasswordVisible) androidx.compose.ui.text.input.VisualTransformation.None else androidx.compose.ui.text.input.PasswordVisualTransformation()
+                visualTransformation = if (isPasswordVisible) androidx.compose.ui.text.input.VisualTransformation.None else androidx.compose.ui.text.input.PasswordVisualTransformation()
             )
 
             Spacer(modifier = Modifier.height(25.dp))
@@ -120,7 +139,7 @@ fun AppLoginScreen(
             Button(
                 onClick = {
 
-                    if(!isNetworkAvailable(context)){
+                    if (!isNetworkAvailable(context)) {
                         corScope.launch {
                             mySnackBarHostState.showSnackbar("No Internet Connection")
                         }
@@ -141,7 +160,8 @@ fun AppLoginScreen(
                             )
 
                             if (response.isSuccessful) {
-                                val sharedPref = context.getSharedPreferences("user_pref", Context.MODE_PRIVATE)
+                                val sharedPref =
+                                    context.getSharedPreferences("user_pref", Context.MODE_PRIVATE)
                                 sharedPref.edit {
                                     putBoolean("is_logged_in", true)
                                     putString("username", userName.value)
@@ -159,7 +179,7 @@ fun AppLoginScreen(
                         }
                     }
                 },
-                    modifier = Modifier
+                modifier = Modifier
                     .width(150.dp)
                     .height(60.dp)
                     .border(
@@ -169,7 +189,11 @@ fun AppLoginScreen(
                     ),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             ) {
-                Text(text = "Log In",style = MaterialTheme.typography.titleLarge , color = Color.Gray)
+                Text(
+                    text = "Log In",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Color.Gray
+                )
             }
 
             Spacer(modifier = Modifier.height(40.dp))
@@ -212,7 +236,12 @@ fun AppLoginScreen(
             snackbar = { data ->
                 Snackbar(
                     snackbarData = data,
-                    containerColor = Color(ContextCompat.getColor(LocalContext.current,R.color.snackBarColor)),
+                    containerColor = Color(
+                        ContextCompat.getColor(
+                            LocalContext.current,
+                            R.color.snackBarColor
+                        )
+                    ),
                     contentColor = Color.White
                 )
             }

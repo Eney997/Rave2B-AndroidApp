@@ -56,17 +56,25 @@ fun EventsScreen(myNavController: NavController) {
     ) {
         when {
             isLoading -> {
-                Text(text = "Loading...",  color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
+                Text(
+                    text = "Loading...",
+                    color = Color.White,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Normal
+                )
             }
 
             hasInternetError -> {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         text = "No internet connection",
-                        color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal,
+                        color = Color.White,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Normal,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
-                    Button(onClick = { ticketViewModel.fetchTickets() },
+                    Button(
+                        onClick = { ticketViewModel.fetchTickets() },
                         modifier = Modifier
                             .width(140.dp)
                             .height(55.dp)
@@ -77,7 +85,11 @@ fun EventsScreen(myNavController: NavController) {
                             ),
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
                     ) {
-                        Text("Retry",style = MaterialTheme.typography.titleLarge , color = Color.Gray)
+                        Text(
+                            "Retry",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = Color.Gray
+                        )
                     }
                 }
             }
@@ -92,11 +104,11 @@ fun EventsScreen(myNavController: NavController) {
         }
     }
 }
+
 //card for tickets
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun TicketItem(ticket: TicketDto,myNavController: NavController)
-{
+fun TicketItem(ticket: TicketDto, myNavController: NavController) {
     //catch event happened already or not
     val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
     val eventDate = try {
@@ -115,7 +127,14 @@ fun TicketItem(ticket: TicketDto,myNavController: NavController)
             .padding(bottom = 15.dp)
             .border(1.dp, Color.DarkGray, shape = RoundedCornerShape(10.dp))
             .clip(RoundedCornerShape(10.dp))
-            .background(color = Color(ContextCompat.getColor(LocalContext.current, R.color.snackBarColor)))
+            .background(
+                color = Color(
+                    ContextCompat.getColor(
+                        LocalContext.current,
+                        R.color.snackBarColor
+                    )
+                )
+            )
     )
     {
         Text(
@@ -134,12 +153,42 @@ fun TicketItem(ticket: TicketDto,myNavController: NavController)
                 .padding(start = 20.dp, top = 30.dp, bottom = 30.dp, end = 20.dp)
         )
         {
-            Text("SET-I: ${ticket.djNameOne}", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal, color = Color.White)
-            Text("SET-II: ${ticket.djNameTwo}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
-            Text("SET-III: ${ticket.djNameThree}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
-            Text("SET-IV: ${ticket.djNameFour}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
-            Text("Date: ${ticket.eventDate}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
-            Text("Price: ${ticket.price}", color = Color.White, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal)
+            Text(
+                "SET-I: ${ticket.djNameOne}",
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Normal,
+                color = Color.White
+            )
+            Text(
+                "SET-II: ${ticket.djNameTwo}",
+                color = Color.White,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Normal
+            )
+            Text(
+                "SET-III: ${ticket.djNameThree}",
+                color = Color.White,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Normal
+            )
+            Text(
+                "SET-IV: ${ticket.djNameFour}",
+                color = Color.White,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Normal
+            )
+            Text(
+                "Date: ${ticket.eventDate}",
+                color = Color.White,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Normal
+            )
+            Text(
+                "Price: ${ticket.price}",
+                color = Color.White,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Normal
+            )
 
             Spacer(modifier = Modifier.height(30.dp))
 

@@ -49,8 +49,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppSignUpScreen()
-{
+fun AppSignUpScreen() {
     val context = LocalContext.current
     val locations = listOf("Georgia", "Germany", "France", "Poland", "Spain")
     var expanded by remember { mutableStateOf(false) }
@@ -67,8 +66,8 @@ fun AppSignUpScreen()
 
     Box(
         modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Black),
+            .fillMaxSize()
+            .background(Color.Black),
         contentAlignment = Alignment.Center
     )
     {
@@ -82,7 +81,7 @@ fun AppSignUpScreen()
             TextField(
                 value = userName.value,
                 onValueChange = {
-                    val filteredUsername = it.filter { char -> char.isLetter()}.uppercase()
+                    val filteredUsername = it.filter { char -> char.isLetter() }.uppercase()
                     userName.value = filteredUsername
                 },
                 modifier = Modifier
@@ -181,7 +180,12 @@ fun AppSignUpScreen()
                     onValueChange = {},
                     readOnly = true,
                     placeholder = {
-                        Text("Select country", color = Color.Gray, style = MaterialTheme.typography.titleMedium,fontSize = 19.sp)
+                        Text(
+                            "Select country",
+                            color = Color.Gray,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontSize = 19.sp
+                        )
                     },
                     textStyle = MaterialTheme.typography.titleMedium.copy(
                         color = Color.White,
@@ -223,7 +227,7 @@ fun AppSignUpScreen()
             TextField(
                 value = fName.value,
                 onValueChange = {
-                    val filteredFName = it.filter { char -> char.isLetter()}.uppercase()
+                    val filteredFName = it.filter { char -> char.isLetter() }.uppercase()
                     fName.value = filteredFName
                 },
                 modifier = Modifier
@@ -316,182 +320,172 @@ fun AppSignUpScreen()
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            Button(onClick = {
+            Button(
+                onClick = {
 
-                val user = RegistrationDto(
-                    username =  userName.value,
-                    password = password.value,
-                    gmail = gmail.value,
-                    country = country.value,
-                    fName = fName.value,
-                    lName = lName.value,
-                    idNumber = idNumber.value
-                )
+                    val user = RegistrationDto(
+                        username = userName.value,
+                        password = password.value,
+                        gmail = gmail.value,
+                        country = country.value,
+                        fName = fName.value,
+                        lName = lName.value,
+                        idNumber = idNumber.value
+                    )
 
-                //network offline error
-                if(!isNetworkAvailable(context))
-                {
-                    corScope.launch {
-                        mySnackBarHostState.showSnackbar("No Internet Connection")
+                    //network offline error
+                    if (!isNetworkAvailable(context)) {
+                        corScope.launch {
+                            mySnackBarHostState.showSnackbar("No Internet Connection")
+                        }
+                        return@Button
                     }
-                    return@Button
-                }
 
-                //empty input handle
-                if(userName.value.isEmpty() || password.value.isEmpty() || gmail.value.isEmpty() || country.value.isEmpty() || fName.value.isEmpty() || lName.value.isEmpty() || idNumber.value.isEmpty())
-                {
-                    corScope.launch {
-                        mySnackBarHostState.showSnackbar("Empty input!")
+                    //empty input handle
+                    if (userName.value.isEmpty() || password.value.isEmpty() || gmail.value.isEmpty() || country.value.isEmpty() || fName.value.isEmpty() || lName.value.isEmpty() || idNumber.value.isEmpty()) {
+                        corScope.launch {
+                            mySnackBarHostState.showSnackbar("Empty input!")
+                        }
+                        return@Button
                     }
-                    return@Button
-                }
 
-                //username max len
-                if(userName.value.length > 25)
-                {
-                    corScope.launch {
-                        mySnackBarHostState.showSnackbar("You are out of username length.")
+                    //username max len
+                    if (userName.value.length > 25) {
+                        corScope.launch {
+                            mySnackBarHostState.showSnackbar("You are out of username length.")
+                        }
+                        return@Button
                     }
-                    return@Button
-                }
 
-                //userName min length
-                if (userName.value.length < 7) {
-                    corScope.launch {
-                        mySnackBarHostState.showSnackbar("Username minimum length is 7.")
+                    //userName min length
+                    if (userName.value.length < 7) {
+                        corScope.launch {
+                            mySnackBarHostState.showSnackbar("Username minimum length is 7.")
+                        }
+                        return@Button
                     }
-                    return@Button
-                }
 
-                //password max len
-                if(password.value.length > 25)
-                {
-                    corScope.launch {
-                        mySnackBarHostState.showSnackbar("You are out of password length.")
+                    //password max len
+                    if (password.value.length > 25) {
+                        corScope.launch {
+                            mySnackBarHostState.showSnackbar("You are out of password length.")
+                        }
+                        return@Button
                     }
-                    return@Button
-                }
 
-                //userName min length
-                if (password.value.length < 7)
-                {
-                    corScope.launch {
-                        mySnackBarHostState.showSnackbar("Password minimum length is 7.")
+                    //userName min length
+                    if (password.value.length < 7) {
+                        corScope.launch {
+                            mySnackBarHostState.showSnackbar("Password minimum length is 7.")
+                        }
+                        return@Button
                     }
-                    return@Button
-                }
 
-                //gmail handle
-                val gmailRegex = Regex("^[a-zA-Z0-9._%+-]+@gmail\\.com$")
-                if (!gmailRegex.matches(gmail.value))
-                {
-                    corScope.launch {
-                        mySnackBarHostState.showSnackbar("Gmail ends only with @gmail.com")
+                    //gmail handle
+                    val gmailRegex = Regex("^[a-zA-Z0-9._%+-]+@gmail\\.com$")
+                    if (!gmailRegex.matches(gmail.value)) {
+                        corScope.launch {
+                            mySnackBarHostState.showSnackbar("Gmail ends only with @gmail.com")
+                        }
+                        return@Button
                     }
-                    return@Button
-                }
 
-                //gmail len
-                if (gmail.value.length > 40)
-                {
-                    corScope.launch {
-                        mySnackBarHostState.showSnackbar("Try another gmail.")
+                    //gmail len
+                    if (gmail.value.length > 40) {
+                        corScope.launch {
+                            mySnackBarHostState.showSnackbar("Try another gmail.")
+                        }
+                        return@Button
                     }
-                    return@Button
-                }
 
-                //first name min handle
-                if(fName.value.length < 2)
-                {
-                    corScope.launch {
-                        mySnackBarHostState.showSnackbar("Name should be more than 2 character.")
+                    //first name min handle
+                    if (fName.value.length < 2) {
+                        corScope.launch {
+                            mySnackBarHostState.showSnackbar("Name should be more than 2 character.")
+                        }
+                        return@Button
                     }
-                    return@Button
-                }
 
-                //first name max handle
-                if(fName.value.length > 20)
-                {
-                    corScope.launch {
-                        mySnackBarHostState.showSnackbar("Are you sure that's name?")
+                    //first name max handle
+                    if (fName.value.length > 20) {
+                        corScope.launch {
+                            mySnackBarHostState.showSnackbar("Are you sure that's name?")
+                        }
+                        return@Button
                     }
-                    return@Button
-                }
 
-                //lastname min handle
-                if(lName.value.length < 2)
-                {
-                    corScope.launch {
-                        mySnackBarHostState.showSnackbar("Last name should be more than 2 character.")
+                    //lastname min handle
+                    if (lName.value.length < 2) {
+                        corScope.launch {
+                            mySnackBarHostState.showSnackbar("Last name should be more than 2 character.")
+                        }
+                        return@Button
                     }
-                    return@Button
-                }
 
-                //lastname max handle
-                if(lName.value.length > 20)
-                {
-                    corScope.launch {
-                        mySnackBarHostState.showSnackbar("Are you sure that's last name?")
+                    //lastname max handle
+                    if (lName.value.length > 20) {
+                        corScope.launch {
+                            mySnackBarHostState.showSnackbar("Are you sure that's last name?")
+                        }
+                        return@Button
                     }
-                    return@Button
-                }
 
-                //id number len handle
-                if(idNumber.value.length != 11)
-                {
-                    corScope.launch {
-                        mySnackBarHostState.showSnackbar("Id number length is 11 character.")
+                    //id number len handle
+                    if (idNumber.value.length != 11) {
+                        corScope.launch {
+                            mySnackBarHostState.showSnackbar("Id number length is 11 character.")
+                        }
+                        return@Button
                     }
-                    return@Button
-                }
 
-                //corScope for account creation
-                corScope.launch {
-                   try {
-                       val response = RetrofitClient.apiService.createUser(user)
+                    //corScope for account creation
+                    corScope.launch {
+                        try {
+                            val response = RetrofitClient.apiService.createUser(user)
 
-                       if(response.isSuccessful){
-                           corScope.launch {
-                               mySnackBarHostState.showSnackbar("Account created successfully.")
+                            if (response.isSuccessful) {
+                                corScope.launch {
+                                    mySnackBarHostState.showSnackbar("Account created successfully.")
+                                }
+                                //clear inputs
+                                userName.value = ""
+                                password.value = ""
+                                gmail.value = ""
+                                country.value = ""
+                                fName.value = ""
+                                lName.value = ""
+                                idNumber.value = ""
+                            } else if (response.code() == 409) {
+                                corScope.launch {
+                                    mySnackBarHostState.showSnackbar("Username or Id number already taken")
+                                }
+                                return@launch
+                            } else {
+                                Log.e("myLog", "Server error: ${response.code()}")
                             }
-                               //clear inputs
-                               userName.value = ""
-                               password.value = ""
-                               gmail.value = ""
-                               country.value = ""
-                               fName.value = ""
-                               lName.value = ""
-                               idNumber.value = ""
-                       }else if (response.code() == 409)
-                       {
-                           corScope.launch {
-                               mySnackBarHostState.showSnackbar("Username or Id number already taken")
-                           }
-                           return@launch
-                       }
-                       else {
-                           Log.e("myLog", "Server error: ${response.code()}")
-                       }
-                   }
-                   catch (e: Exception)
-                   {
-                        Log.d("myLog","Coroutine error:${e.localizedMessage}")
-                   }
-                }
-            },
+                        } catch (e: Exception) {
+                            Log.d("myLog", "Coroutine error:${e.localizedMessage}")
+                        }
+                    }
+                },
                 modifier = Modifier
-                .height(75.dp)
-                .width(350.dp)
-                .padding(start = 230.dp, bottom = 20.dp)
-                .border(
-                    2.dp,
-                    Color.Gray,
-                    shape = androidx.compose.foundation.shape.RoundedCornerShape(10.dp)
-                ),
+                    .height(75.dp)
+                    .width(350.dp)
+                    .padding(start = 230.dp, bottom = 20.dp)
+                    .border(
+                        2.dp,
+                        Color.Gray,
+                        shape = androidx.compose.foundation.shape.RoundedCornerShape(10.dp)
+                    ),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             )
             {
-                Text(text = "Sign Up", color = Color.Gray, style = MaterialTheme.typography.titleMedium,fontSize = 19.sp)
+                Text(
+                    text = "Sign Up",
+                    color = Color.Gray,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontSize = 19.sp
+                )
             }
         }
         //snackBar
@@ -503,7 +497,12 @@ fun AppSignUpScreen()
             snackbar = { data ->
                 Snackbar(
                     snackbarData = data,
-                    containerColor = Color(ContextCompat.getColor(LocalContext.current,R.color.snackBarColor)),
+                    containerColor = Color(
+                        ContextCompat.getColor(
+                            LocalContext.current,
+                            R.color.snackBarColor
+                        )
+                    ),
                     contentColor = Color.White
                 )
             }

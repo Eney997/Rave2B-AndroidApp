@@ -107,7 +107,11 @@ fun TicketScreen() {
                                 ),
                             colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
                         ) {
-                            Text("Retry", style = MaterialTheme.typography.titleLarge, color = Color.Gray)
+                            Text(
+                                "Retry",
+                                style = MaterialTheme.typography.titleLarge,
+                                color = Color.Gray
+                            )
                         }
                     }
                 }
@@ -123,6 +127,7 @@ fun TicketScreen() {
         }
     }
 }
+
 //card for tickets
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -158,12 +163,42 @@ fun PurchasedTickets(transaction: TransactionDto) {
                 .fillMaxSize()
                 .padding(start = 20.dp, top = 30.dp, bottom = 30.dp, end = 20.dp)
         ) {
-            Text("SET-I: ${transaction.djOne}", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal, color = Color.White)
-            Text("SET-II: ${transaction.djTwo}", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal, color = Color.White)
-            Text("SET-III: ${transaction.djThree}", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal, color = Color.White)
-            Text("SET-IV: ${transaction.djFour}", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal, color = Color.White)
-            Text("Price: ${transaction.price}", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal, color = Color.White)
-            Text("Date: ${transaction.eventDateSave}", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Normal, color = Color.White)
+            Text(
+                "SET-I: ${transaction.djOne}",
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Normal,
+                color = Color.White
+            )
+            Text(
+                "SET-II: ${transaction.djTwo}",
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Normal,
+                color = Color.White
+            )
+            Text(
+                "SET-III: ${transaction.djThree}",
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Normal,
+                color = Color.White
+            )
+            Text(
+                "SET-IV: ${transaction.djFour}",
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Normal,
+                color = Color.White
+            )
+            Text(
+                "Price: ${transaction.price}",
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Normal,
+                color = Color.White
+            )
+            Text(
+                "Date: ${transaction.eventDateSave}",
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Normal,
+                color = Color.White
+            )
         }
 
         Image(

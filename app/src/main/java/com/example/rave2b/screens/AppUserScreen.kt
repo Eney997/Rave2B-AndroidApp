@@ -35,7 +35,7 @@ import com.example.rave2b.R
 import kotlin.collections.forEach
 
 //data class for bottom nav item
-data class BottomNavItem(val name:String,val route:String,val icon:Int)
+data class BottomNavItem(val name: String, val route: String, val icon: Int)
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -44,20 +44,20 @@ fun AppUserScreen() {
 
     val navController = rememberNavController()
     val bottomNavItems = listOf(
-        BottomNavItem("Home","HomeScreen", R.drawable.ic_home),
-        BottomNavItem("Nights","EventsScreen", R.drawable.ic_fire_nights),
-        BottomNavItem("Tickets","TicketScreen", R.drawable.ic_hub),
-        BottomNavItem("Settings","SettingsScreen", R.drawable.ic_settings)
+        BottomNavItem("Home", "HomeScreen", R.drawable.ic_home),
+        BottomNavItem("Nights", "EventsScreen", R.drawable.ic_fire_nights),
+        BottomNavItem("Tickets", "TicketScreen", R.drawable.ic_hub),
+        BottomNavItem("Settings", "SettingsScreen", R.drawable.ic_settings)
     )
 
-    Scaffold (
+    Scaffold(
         bottomBar = {
             BottomNavigationBar(
                 items = bottomNavItems,
                 navController = navController,
-                onItemClick = {item ->
-                    navController.navigate(item.route){
-                        popUpTo(navController.graph.startDestinationId){saveState = true}
+                onItemClick = { item ->
+                    navController.navigate(item.route) {
+                        popUpTo(navController.graph.startDestinationId) { saveState = true }
                         launchSingleTop = true
                         restoreState = true
                     }
@@ -71,18 +71,18 @@ fun AppUserScreen() {
         }
     }
 }
+
 //navigation in bottom bar
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun Navigation(navHostController: NavHostController)
-{
+fun Navigation(navHostController: NavHostController) {
     NavHost(startDestination = "HomeScreen", navController = navHostController)
     {
-        composable("HomeScreen"){HomeScreen()}
-        composable("EventsScreen"){EventsScreen(navHostController)}
-        composable("TicketScreen"){ TicketScreen() }
+        composable("HomeScreen") { HomeScreen() }
+        composable("EventsScreen") { EventsScreen(navHostController) }
+        composable("TicketScreen") { TicketScreen() }
         //to take special arguments from events screen
-        composable ( route = "BuyTicketScreen/{djNameOne}/{djNameTwo}/{djNameThree}/{djNameFour}/{price}/{eventDate}")
+        composable(route = "BuyTicketScreen/{djNameOne}/{djNameTwo}/{djNameThree}/{djNameFour}/{price}/{eventDate}")
         { backStackEntry ->
 
             val djNameOne = backStackEntry.arguments?.getString("djNameOne") ?: ""
@@ -92,44 +92,42 @@ fun Navigation(navHostController: NavHostController)
             val price = backStackEntry.arguments?.getString("price") ?: ""
             val eventDate = backStackEntry.arguments?.getString("eventDate") ?: ""
 
-            BuyTicketScreen(djNameOne,djNameTwo,djNameThree,djNameFour,price,eventDate)
+            BuyTicketScreen(djNameOne, djNameTwo, djNameThree, djNameFour, price, eventDate)
         }
-        composable("SettingsScreen"){ SettingsScreen() }
+        composable("SettingsScreen") { SettingsScreen() }
     }
 
 }
+
 //create bottom nav design
 @Composable
-fun BottomNavigationBar
-            (
-    items:List<BottomNavItem>,
-    navController:NavController,
-    onItemClick:(BottomNavItem) -> Unit
-)
-{
+fun BottomNavigationBar(
+    items: List<BottomNavItem>,
+    navController: NavController,
+    onItemClick: (BottomNavItem) -> Unit
+) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val context = LocalContext.current
     val bottomBarBkColor = Color(ContextCompat.getColor(context, R.color.snackBarColor))
 
-    NavigationBar(modifier = Modifier.height(100.dp),containerColor = bottomBarBkColor)
+    NavigationBar(modifier = Modifier.height(100.dp), containerColor = bottomBarBkColor)
     {
-        items.forEach{item ->
+        items.forEach { item ->
             val selected = item.route == backStackEntry?.destination?.route
 
             NavigationBarItem(
                 selected = selected,
                 onClick = { onItemClick(item) },
                 icon = {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally){
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Icon(
                             painter = painterResource(id = item.icon),
                             contentDescription = item.name,
                             modifier = Modifier.size(32.dp),
-                            tint = if(selected) Color.White else Color.Gray
+                            tint = if (selected) Color.White else Color.Gray
                         )
 
-                        if(selected)
-                        {
+                        if (selected) {
                             Text(
                                 text = item.name,
                                 textAlign = TextAlign.Center,
